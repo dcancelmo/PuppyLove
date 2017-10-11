@@ -1,4 +1,4 @@
-# term-project-sql-injectors
+# Puppy Love
 term-project-sql-injectors created by GitHub Classroom
 
 Team members:
