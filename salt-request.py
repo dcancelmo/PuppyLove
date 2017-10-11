@@ -7,7 +7,7 @@ cgitb.enable()
 print 'Content-Type: text/html'
 print
 
-database_name = 'puppy_love.db'
+database_name = 'createUser.db'
 table_name = 'users'
 
 form = cgi.FieldStorage
@@ -15,7 +15,6 @@ username = form['username'].value()
 
 conn = sqlite3.connect(database_name)
 c = conn.cursor()
-print c.execute("SELECT salt FROM " + table_name + " WHERE username=?;", username)
-
-
+print c.execute('SELECT timeCreated FROM ' + table_name + ' WHERE username=?;', username)
+conn.commit()
 conn.close()
