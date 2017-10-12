@@ -14,9 +14,9 @@ print
 database_name = 'createUser.db'
 table_name = 'users'
 
-form = cgi.FieldStorage
-username = form['username'].value()
-password = form['password'].value()
+form = cgi.FieldStorage()
+username = form['username'].value
+password = form['password'].value
 timestamp = str(datetime.datetime.now())
 password = password + timestamp
 hashPass = sha256(password.encode('ascii')).hexdigest()
@@ -27,9 +27,9 @@ c = conn.cursor()
 c.execute('CREATE TABLE IF NOT EXISTS users(username varchar(30) primary key, password char(64), timeCreated varchar(26))')
 
 #Check if already in database
-queryName = c.execute('SELECT username FROM ? WHERE username=?', database_name, username)
-if queryName != username:
-    c.execute('INSERT INTO users (username, password, timeCreated) VALUES (?, ?, ?)', (username, hashPass, timestamp))
+queryName = c.execute('SELECT username FROM ' + table_name + ' WHERE username=?', [username]).fetchall().pop(0)
+if queryName is username:
+    c.execute('INSERT INTO users (username, password, timeCreated) VALUES (?, ?, ?)', [username, hashPass, timestamp])
     print '''<html>
         <head>
             <title>Success</title>

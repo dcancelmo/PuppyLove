@@ -10,8 +10,8 @@ print ""
 database_name = 'createUser.db'
 table_name = 'users'
 
-form = cgi.FieldStorage
-username = form['username'].value()
+form = cgi.FieldStorage()
+username = form['username'].value
 
 conn = sqlite3.connect(database_name)
 c = conn.cursor()
