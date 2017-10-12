@@ -5,7 +5,7 @@ import cgi
 cgitb.enable()
 
 print 'Content-Type: text/html'
-print
+print ""
 
 database_name = 'createUser.db'
 table_name = 'users'

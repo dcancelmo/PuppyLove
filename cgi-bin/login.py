@@ -6,7 +6,7 @@ import sqlite3
 
 cgitb.enable()
 
-print "Content-type: text/html"
+print "Content-Type: text/html"
 print "Set-Cookie: userName=value"
 print ""
 
