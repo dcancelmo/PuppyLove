@@ -27,8 +27,9 @@ c = conn.cursor()
 c.execute('CREATE TABLE IF NOT EXISTS users(username varchar(30) primary key, password char(64), timeCreated varchar(26))')
 
 #Check if already in database
-queryName = c.execute('SELECT username FROM ' + table_name + ' WHERE username=?', [username]).fetchall().pop(0)
-if queryName is username:
+#queryName = c.execute('SELECT username FROM ' + table_name + ' WHERE username=?', [username]).fetchone()
+#if queryName is not username:
+try:
     c.execute('INSERT INTO users (username, password, timeCreated) VALUES (?, ?, ?)', [username, hashPass, timestamp])
     print '''<html>
         <head>
@@ -43,7 +44,8 @@ if queryName is username:
         </body>
     </html>
     '''
-else:
+#else:
+except sqlite3.IntegrityError:
     print '''<html>
             <head>
                 <title>Invalid</title>
