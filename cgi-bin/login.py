@@ -1,8 +1,9 @@
-#!C:\Python27\python.exe
+#!C:\Python.exe
 
 import cgitb
 import cgi
 import sqlite3
+from hashlib import sha256
 
 cgitb.enable()
 
@@ -20,8 +21,20 @@ c = conn.cursor()
 
 c.execute('CREATE TABLE IF NOT EXISTS users(username varchar(30) primary key, password varchar(30))')
 
-#c.execute('INSERT INTO users VALUES([UserName], [DogName]) VALUES(@UserName, @DogName)')
-c.execute('INSERT INTO users VALUES("userName", "password")')
+rows = c.execute('SELECT * FROM users WHERE username = ?', [userName])
+
+for row in rows:
+	hashed_pass = row['password']
+	salt = row['timeCreated']
+	test_pass = password + salt
+	test_pass = sha256(test_pass.encode('ascii')).hexdigest()
+	if test_pass == hashed_pass:
+		# DO SOMETHING HERE
+	else:
+		#do something like this
+		raise Exception('Incorrect username/password')
+
+
 conn.commit()
 conn.close()
 
