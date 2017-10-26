@@ -9,10 +9,12 @@
 			font-family: sans-serif;
 		}
 		</style>
-		<!--<script src="jquery-3.2.1.min.js"/>-->
-		<!--<script src="./cgi-bin/login.py">-->
-			<!--$(document).onload()-->
-		<!--</script>-->
+		<script src="jquery-3.2.1.min.js"/>
+		<script src="./cgi-bin/login.py">
+			$(document).onload( function () {
+				$.ajax({ url : "./cgi-bin/login.py"})
+            });
+		</script>
 	</head>
 	<body>
 		<div id="title">
