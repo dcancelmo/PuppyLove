@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+	<head>
+		<title>Puppy Love </title>
+		<meta charset="UTF-8">
+		<style>
+		body {
+			text-align: center;
+			font-family: sans-serif;
+		}
+		#title{
+
+		}
+		</style>
+	<body>
+		<form action="./cgi-bin/edit_profile.py" method = "post">
+			<h2> Your Name: </h2>
+			<input type="text" name="username">
+			<br>
+            <h2> Profile Picture: </h2>
+            <input type="file" name="userPic">
+            <br>
+            <h2> Your Dog's Name: </h2>
+            <input type="text" name="dogName">
+            <br>
+            <h2> A Picture of your dog: </h2>
+            <input type="file" name="dogPic">
+            <br>
+            <h2> Add a description: </h2>
+            <input type="text" name="description" size="40">
+            <br>
+            
+            <h2> Who are you interested in?: </h2>
+            <input type="radio" name="gender" value="male"> Male<br>
+            <input type="radio" name="gender" value="female"> Female<br>
+            <input type="radio" name="gender" value="both"> Both<br>
+
+			<button type="submit"> Update </button>
+		</form>
+	</body>
+</html>
