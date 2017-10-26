@@ -18,7 +18,7 @@ form = cgi.FieldStorage()
 username = str(form['username'].value)
 password = str(form['password'].value)
 passwordConfirm = str(form['passwordConfirm'].value)
-if (password != passwordConfirm):
+if password != passwordConfirm:
     print '''<html>
             <head>
                 <title>Invalid</title>

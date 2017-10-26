@@ -19,13 +19,14 @@ if stored_login_cookie:
     cookie = Cookie.SimpleCookie(stored_login_cookie)
     rows = c.execute('SELECT * FROM users WHERE username = ?', [cookie['LOGIN'].value])
     rows = rows.fetchone()
+
     if rows[0].value == cookie['LOGIN'].value:
         # Resets expires to be 30 days from last login
         new_cookie = Cookie.SimpleCookie()
         new_cookie['LOGIN'] = cookie['LOGIN'].value
         expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-        new_cookie['LOGIN']['expires'] = expires.strftime("%a, %d %b %Y %H:%M:%S GMT")
-        print 'Content-Type: text/html'
+        new_cookie['LOGIN']['expires'] = expires.strftime("%a,%d%b%Y%H:%M:%SGMT")
+        print "Content-Type: text/html"
         print new_cookie
         print
         print '''<html>
@@ -72,7 +73,7 @@ else:
             cookie = Cookie.SimpleCookie()
             cookie['LOGIN'] = userName
             expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-            cookie['LOGIN']['expires'] = expires.strftime("%a, %d %b %Y %H:%M:%S")
+            cookie['LOGIN']['expires'] = expires.strftime("%a,%d%b%Y%H:%M:%SGMT")
             print cookie
         print
         print '''<html>
