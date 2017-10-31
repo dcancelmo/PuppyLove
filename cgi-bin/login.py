@@ -27,8 +27,8 @@ if stored_login_cookie:
         expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
         new_cookie['LOGIN']['expires'] = expires.strftime("%a,%d%b%Y%H:%M:%SGMT")
         print "Content-Type: text/html"
-        print new_cookie
         print
+        print new_cookie
         print '''<html>
                     <head>
                     <title>Correct Login</title>
