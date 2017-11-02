@@ -38,6 +38,8 @@ if stored_login_cookie:
                     <p>'''
         print 'Your name: ' + new_cookie['LOGIN'].value
         print '''</p>
+                        <form action=""><br><br>
+		                <button type="button" class="btn-default" name="logout"> Logout </button>
                     </body>
                     </html>
                     '''

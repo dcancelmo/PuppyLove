@@ -7,6 +7,7 @@
 		body {
 			text-align: center;
 			font-family: sans-serif;
+            /*background-image: url(/photos/love.jpg);*/
 		}
 		</style>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -17,7 +18,6 @@
             data: { param: " "},
             dataType: "text"
         }).done(function(response) {
-            // need thing to put html response in DOM
             $('#response').html(response)
         });
     </script>
