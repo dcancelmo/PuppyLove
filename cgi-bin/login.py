@@ -50,7 +50,7 @@ if stored_login_cookie:
                 </head>
                 <body>
                     <p>An error has occurred.</p>
-                    <p><a href="localhost">Go back</a></p>
+                    <p><a href="../login.html">Go back</a></p>
                 </body>
                 </html>
                 '''
