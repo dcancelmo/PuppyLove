@@ -1,33 +1,27 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Puppy Love </title>
-		<meta charset="UTF-8">
-		<style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Puppy Love</title>
+    <style>
 		body {
 			text-align: center;
 			font-family: sans-serif;
+            /*background-image: url(/photos/love.jpg);*/
 		}
 		</style>
-		<script src="jquery-3.2.1.min.js"/>
-		<script src="./cgi-bin/login.py">
-			$(document).onload( function () {
-				$.ajax({ url : "./cgi-bin/login.py"})
-            });
-		</script>
-	</head>
-	<body>
-		<div id="title">
-			<h1>Login</h1>
-		</div>
-		<br>
-		<form method = "post" action="./cgi-bin/login.py">
-			Username: <input type="text" name="username">
-			<br>
-			Password: <input type="password" name="password">
-			<br>
-			<button type="submit"> Login </button>
-		</form>
-		<h4><a href="account-create.html">Or create a new account!</a></h4>
-	</body>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "/cgi-bin/cookieChecker.py",
+            data: { param: " "},
+            dataType: "text"
+        }).done(function(response) {
+            $('#response').html(response)
+        });
+    </script>
+</head>
+    <body id="response">
+    </body>
 </html>

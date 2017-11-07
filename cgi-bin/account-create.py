@@ -25,7 +25,6 @@ if password != passwordConfirm:
             </head>
             <body>
                 <h1>Passwords do not match</h1>
-                <h2>
             </body>
         </html>
         '''

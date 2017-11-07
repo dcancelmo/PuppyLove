@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import cgitb
-import cgi
 import sqlite3
 import Cookie
 import os
 import datetime
-from hashlib import sha256
+
+
 
 cgitb.enable()
 
@@ -15,9 +15,11 @@ c = conn.cursor()
 c.execute('CREATE TABLE IF NOT EXISTS users(username varchar(30) primary key, password char(64), timeCreated varchar(26))')
 
 stored_login_cookie = os.environ.get('HTTP_COOKIE')
-form = cgi.FieldStorage()
+if stored_login_cookie:
+    cookie = Cookie.SimpleCookie(stored_login_cookie)
+    rows = c.execute('SELECT * FROM users WHERE username = ?', [cookie['LOGIN'].value])
+    rows = rows.fetchone()
 
-<<<<<<< HEAD
     if rows[0] == cookie['LOGIN'].value:
         # Resets expires to be 30 days from last login
         new_cookie = Cookie.SimpleCookie()
@@ -25,8 +27,8 @@ form = cgi.FieldStorage()
         expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
         new_cookie['LOGIN']['expires'] = expires.strftime("%a,%d%b%Y%H:%M:%SGMT")
         print "Content-Type: text/html"
-        print
         print new_cookie
+        print
         print '''<html>
                     <head>
                     <title>Correct Login</title>
@@ -36,6 +38,8 @@ form = cgi.FieldStorage()
                     <p>'''
         print 'Your name: ' + new_cookie['LOGIN'].value
         print '''</p>
+                        <form action=""><br><br>
+		                <button type="button" class="btn-default" name="logout"> Logout </button>
                     </body>
                     </html>
                     '''
@@ -48,59 +52,39 @@ form = cgi.FieldStorage()
                 </head>
                 <body>
                     <p>An error has occurred.</p>
-                    <p><a href="../login.html">Go back</a></p>
+                    <p><a href="localhost">Go back</a></p>
                 </body>
                 </html>
                 '''
 else:
-    form = cgi.FieldStorage()
-
-    userName = form['username'].value
-    password = form['password'].value
-=======
-userName = form['username'].value
-password = form['password'].value
->>>>>>> f5aac2ec2e82c789f1809c5dff3662bc77445bfb
-
-rows = c.execute('SELECT * FROM users WHERE username = ?', [userName])
-rows = rows.fetchone()
-
-hashed_pass = rows[1]
-salt = rows[2]
-test_pass = password + salt
-test_pass = sha256(test_pass.encode('ascii')).hexdigest()
-if hashed_pass == test_pass:
-    print 'Content-Type: text/html'
-    if not stored_login_cookie:
-        cookie = Cookie.SimpleCookie()
-        cookie['LOGIN'] = userName
-        expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-        cookie['LOGIN']['expires'] = expires.strftime("%a,%d%b%Y%H:%M:%SGMT")
-        print cookie
+    print "Content-Type: text/html"
     print
-    print '''<html>
-        <head>
-            <title>Correct Login</title>
-        </head>
-        <body>
-        <p>'''
-    print "Your name: " + userName
-
-    print "Your Password: " + password
-    print '''</p>
-        </body>
-        </html>
-        '''
-else:
-    print '''<html>
-        <head>
-            <title>Incorrect Login</title>
-        </head>
-        <body>
-            <p>Incorrect username/password</p>
-        </body>
-        </html>
-        '''
+    print'''<html>
+    <head>
+        <title>Puppy Love </title>
+        <meta charset="UTF-8">
+        <style>
+        body {
+            text-align: center;
+            font-family: sans-serif;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="title">
+            <h1>Login</h1>
+        </div>
+        <br>
+        <form method = "post" action="/cgi-bin/login.py">
+            Username: <input type="text" name="username">
+            <br>
+            Password: <input type="password" name="password">
+            <br>
+            <button type="submit"> Login </button>
+        </form>
+        <h4><a href="/account-create.html">Or create a new account!</a></h4>
+    </body>
+</html>'''
 
 conn.commit()
 conn.close()
