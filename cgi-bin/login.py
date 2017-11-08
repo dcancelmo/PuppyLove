@@ -112,10 +112,9 @@ else:
                 <title>Correct Login</title>
             </head>
             <body>
+            <p>You are logged in</p>
             <p>'''
         print "Your name: " + userName
-
-        print "Your Password: " + password
         print '''</p>
             </body>
             </html>
