@@ -19,19 +19,6 @@ if stored_login_cookie:
     rows = c.execute('SELECT * FROM users WHERE username = ?', [cookie['LOGIN'].value])
     rows = rows.fetchone()
 
-    # print "Content-Type: text/html"
-    # print
-    # print '''<html>
-    #                 <head>
-    #                     <title>Error</title>
-    #                 </head>
-    #                 <body>
-    #                     <p>An error has occurred.</p>'''
-    # print 'Your name: ' + cookie['LOGIN'].value
-    # print '''<p><a href="../login.html">Go back</a></p>
-    #                 </body>
-    #                 </html>
-    #                 '''
     if rows is not None:
         if rows[0] == cookie['LOGIN'].value:
             # Resets expires to be 30 days from last login
@@ -52,7 +39,8 @@ if stored_login_cookie:
             print 'Your name: ' + new_cookie['LOGIN'].value
             print '''</p>
                             <form method="post" action="/cgi-bin/logout.py"><br><br>
-                            <button type="submit" class="btn-default" name="logout"> Logout </button>
+                                <button type="submit" class="btn-default" name="logout"> Logout </button>
+                            </form>
                         </body>
                         </html>
                         '''
@@ -78,33 +66,8 @@ if stored_login_cookie:
         print
 else:
     print "Content-Type: text/html"
+    print "Location: http://localhost/login.html"
     print
-    print'''<html>
-    <head>
-        <title>Puppy Love </title>
-        <meta charset="UTF-8">
-        <style>
-        body {
-            text-align: center;
-            font-family: sans-serif;
-        }
-        </style>
-    </head>
-    <body>
-        <div id="title">
-            <h1>Login</h1>
-        </div>
-        <br>
-        <form method = "post" action="/cgi-bin/login.py">
-            Username: <input type="text" name="username">
-            <br>
-            Password: <input type="password" name="password">
-            <br>
-            <button type="submit"> Login </button>
-        </form>
-        <h4><a href="/account-create.html">Or create a new account!</a></h4>
-    </body>
-</html>'''
 
 conn.commit()
 conn.close()

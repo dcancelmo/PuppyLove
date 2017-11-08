@@ -25,6 +25,7 @@ if password != passwordConfirm:
             </head>
             <body>
                 <h1>Passwords do not match</h1>
+                <p><a href="/account-create.html">Go back to account creation</a></p>
             </body>
         </html>
         '''
@@ -64,6 +65,7 @@ else:
                 </head>
                 <body>
                     <h3>Username unavailable</h3>
+                    <p><a href="/account-create.html">Go back to account creation</a></p>
                 </body>
             </html>
             '''

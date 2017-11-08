@@ -69,16 +69,22 @@ if stored_login_cookie:
 
             print "Your Password: " + password
             print '''</p>
+                        <form method="post" action="/cgi-bin/logout.py"><br><br>
+                            <button type="submit" class="btn-default" name="logout"> Logout </button>
+                        </form>
                     </body>
                     </html>
                     '''
         else:
+            print 'Content-Type: text/html'
+            print
             print '''<html>
                     <head>
                         <title>Incorrect Login</title>
                     </head>
                     <body>
                         <p>Incorrect username/password</p>
+                        <p><a href="/login.html">Go back to login</a></p>
                     </body>
                     </html>
                     '''
@@ -115,6 +121,8 @@ else:
             </html>
             '''
     else:
+        print 'Content-Type: text/html'
+        print
         print '''<html>
             <head>
                 <title>Incorrect Login</title>

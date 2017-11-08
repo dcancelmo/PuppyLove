@@ -13,13 +13,5 @@ new_cookie['LOGIN']['expires'] = expires.strftime("%a,%d%b%Y%H:%M:%SGMT")
 
 print "Content-Type: text/html"
 print new_cookie
+print "Location: http://localhost/login.html"
 print
-print '''<!DOCTYPE html>
-<html>
-<head>
-<title>Logout</title>
-<head>
-<body>
-<p>You have been logged out</p>
-</body>
-</html>'''
