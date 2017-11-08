@@ -19,7 +19,7 @@ if stored_login_cookie:
     rows = c.execute('SELECT * FROM users WHERE username = ?', [cookie['LOGIN'].value])
     rows = rows.fetchone()
 
-    if rows is not None:
+    if rows is not None and cookie['LOGIN'] is not None:
         if rows[0] == cookie['LOGIN'].value:
             # Resets expires to be 30 days from last login
             new_cookie = Cookie.SimpleCookie()
