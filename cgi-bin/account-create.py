@@ -4,12 +4,12 @@ import cgitb
 import sqlite3
 import cgi
 import datetime
+import Cookie
 from hashlib import sha256
 
 cgitb.enable()
 
 print 'Content-Type: text/html'
-print
 
 database_name = 'createUser.db'
 table_name = 'users'
@@ -19,6 +19,7 @@ username = str(form['username'].value)
 password = str(form['password'].value)
 passwordConfirm = str(form['passwordConfirm'].value)
 if password != passwordConfirm:
+    print
     print '''<html>
             <head>
                 <title>Invalid</title>
@@ -44,6 +45,12 @@ else:
     #if queryName is not username:
     try:
         c.execute('INSERT INTO users (username, password, timeCreated) VALUES (?, ?, ?)', [username, hashPass, timestamp])
+        cookie = Cookie.SimpleCookie()
+        cookie['LOGIN'] = username
+        expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
+        cookie['LOGIN']['expires'] = expires.strftime("%a,%d%b%Y%H:%M:%SGMT")
+        print cookie
+        print
         print '''<html>
             <head>
                 <title>Success</title>
@@ -54,11 +61,13 @@ else:
         print "Username: " + username
         print "<br/>Time created: " + timestamp
         print '''</h2>
+                <p><a href="/cgi-bin/cookieChecker.py">Go to main page</a>
             </body>
         </html>
         '''
     #else:
     except sqlite3.IntegrityError:
+        print
         print '''<html>
                 <head>
                     <title>Invalid</title>
