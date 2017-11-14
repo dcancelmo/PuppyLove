@@ -13,18 +13,57 @@
             background: transparent;
             text-align: center;
             font-family: sans-serif;
-            background-color:pink;
+            background-color:#62B1F6;
         }
 
         #header{
             position:relative;
             height:200px;
             width:100%;
-            background: linear-gradient(lightblue,pink);
+            background: linear-gradient(#ff6a80,#62B1F6);
         }
 
         #logo{
             height:100%;
+        }
+
+        #login{
+            padding-top: 30px;
+        }
+
+        input{
+            font-size:50px;
+            border:0;
+            outline:0;
+            background: transparent;
+            border-bottom: 3px solid white;
+            color:white;
+        }
+
+        ::placeholder{
+            color:white;
+        }
+
+        button{
+            background-color:#ff6a80;
+            padding:10px;
+            color:white;
+            text-align:center;
+            text-decoration:none;
+            font-size: 50px;
+            /*JUST BECAUSE I WANT TO*/
+            cursor:pointer;
+            border-radius:12px;
+            width:70%;
+        } 
+
+        a{
+            color:white;
+            text-decoration:none;
+        }
+
+        a:hover{
+            text-decoration:underline;
         }
 
         </style>
@@ -33,17 +72,17 @@
         <div id="header">
             <img src = "photos/logo.png" id = "logo">
         </div>
-        <div id="title">
-            <h1>Login</h1>
+        <div id = "login">
+            <form method = "post" action="/cgi-bin/login.py">
+                <input type="text" name="username" placeholder = "Username">
+                <br>
+                <br>
+                <input type="password" name="password" placeholder="Password">
+                <br>
+                <br>
+                <button type="submit"> Login </button>
+            </form>
+            <h4><a href="/account-create.html">Or create a new account!</a></h4>
         </div>
-        <br>
-        <form method = "post" action="/cgi-bin/login.py">
-            Username: <input type="text" name="username">
-            <br>
-            Password: <input type="password" name="password">
-            <br>
-            <button type="submit"> Login </button>
-        </form>
-        <h4><a href="/account-create.html">Or create a new account!</a></h4>
     </body>
 </html>
