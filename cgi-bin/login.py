@@ -24,7 +24,7 @@ if stored_login_cookie:
         new_cookie = Cookie.SimpleCookie()
         new_cookie['LOGIN'] = cookie['LOGIN'].value
         expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-        new_cookie['LOGIN']['expires'] = expires.strftime("%a,%d%b%Y%H:%M:%SGMT")
+        new_cookie['LOGIN']['expires'] = str(expires)
         print "Content-Type: text/html"
         print new_cookie
         print
@@ -57,7 +57,7 @@ if stored_login_cookie:
                 cookie = Cookie.SimpleCookie()
                 cookie['LOGIN'] = userName
                 expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-                cookie['LOGIN']['expires'] = expires.strftime("%a,%d%b%Y%H:%M:%SGMT")
+                cookie['LOGIN']['expires'] = str(expires)
                 print cookie
                 print
                 # print '''<html>
@@ -109,7 +109,7 @@ else:
     password = form['password'].value
     rowsCur = c.execute('SELECT * FROM users WHERE username = ?', [userName])
     rows = rowsCur.fetchone()
-    if rowsCur.rowcount > 0 and rows is not None:
+    if rows is not None:
         hashed_pass = rows[1]
         salt = rows[2]
         test_pass = password + salt
@@ -119,7 +119,7 @@ else:
             cookie = Cookie.SimpleCookie()
             cookie['LOGIN'] = userName
             expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-            cookie['LOGIN']['expires'] = expires.strftime("%a,%d%b%Y%H:%M:%SGMT")
+            cookie['LOGIN']['expires'] = str(expires)
             print cookie
             print
             # print '''<html>
@@ -145,7 +145,7 @@ else:
                 <body>
                     <p>Incorrect username/password</p>
                     <p><a href="../login.html">Go back to login</a></p>
-                </body>
+                    </body>
                 </html>
                 '''
     else:
@@ -156,9 +156,13 @@ else:
                             <title>Incorrect Login</title>
                         </head>
                         <body>
-                            <p>Incorrect username/password</p>
-                            <p><a href="../login.html">Go back to login</a></p>
-                        </body>
+                            <p>An error has occurred!</p>'''
+        #                     <p> User: '''
+        # print str(rows) + " </p><p>"
+        # print userName
+        # print password
+        print '''<p><a href="../login.html">Go back to login</a></p>
+                            </body>
                         </html>
                         '''
 

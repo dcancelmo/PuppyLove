@@ -48,7 +48,7 @@ else:
         cookie = Cookie.SimpleCookie()
         cookie['LOGIN'] = username
         expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-        cookie['LOGIN']['expires'] = expires.strftime("%a,%d%b%Y%H:%M:%SGMT")
+        cookie['LOGIN']['expires'] = str(expires)
         print cookie
         print
         print '''<html>
