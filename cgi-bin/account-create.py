@@ -26,7 +26,7 @@ if password != passwordConfirm:
             </head>
             <body>
                 <h1>Passwords do not match</h1>
-                <p><a href="/account-create.html">Go back to account creation</a></p>
+                <p><a href="../account-create.html">Go back to account creation</a></p>
             </body>
         </html>
         '''
@@ -61,7 +61,7 @@ else:
         print "Username: " + username
         print "<br/>Time created: " + timestamp
         print '''</h2>
-                <p><a href="/cgi-bin/cookieChecker.py">Go to main page</a>
+                <p><a href="cookieChecker.py">Go to main page</a>
             </body>
         </html>
         '''
@@ -74,7 +74,7 @@ else:
                 </head>
                 <body>
                     <h3>Username unavailable</h3>
-                    <p><a href="/account-create.html">Go back to account creation</a></p>
+                    <p><a href="../account-create.html">Go back to account creation</a></p>
                 </body>
             </html>
             '''

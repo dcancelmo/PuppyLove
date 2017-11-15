@@ -63,11 +63,11 @@ if stored_login_cookie:
                     '''
     else:
         print "Content-Type: text/html"
-        print "Location: http://localhost/login.html"
+        print "Location: ../login.html"
         print
 else:
     print "Content-Type: text/html"
-    print "Location: http://localhost/login.html"
+    print "Location: ../login.html"
     print
 
 conn.commit()

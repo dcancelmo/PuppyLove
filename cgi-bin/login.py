@@ -86,7 +86,7 @@ if stored_login_cookie:
                         </head>
                         <body>
                             <p>Incorrect username/password</p>
-                            <p><a href="/login.html">Go back to login</a></p>
+                            <p><a href="../login.html">Go back to login</a></p>
                         </body>
                         </html>
                         '''
@@ -99,7 +99,7 @@ if stored_login_cookie:
                         </head>
                         <body>
                             <p>Incorrect username/password</p>
-                            <p><a href="/login.html">Go back to login</a></p>
+                            <p><a href="../login.html">Go back to login</a></p>
                         </body>
                         </html>
                         '''
@@ -144,7 +144,7 @@ else:
                 </head>
                 <body>
                     <p>Incorrect username/password</p>
-                    <p><a href="/login.html">Go back to login</a></p>
+                    <p><a href="../login.html">Go back to login</a></p>
                 </body>
                 </html>
                 '''
@@ -157,7 +157,7 @@ else:
                         </head>
                         <body>
                             <p>Incorrect username/password</p>
-                            <p><a href="/login.html">Go back to login</a></p>
+                            <p><a href="../login.html">Go back to login</a></p>
                         </body>
                         </html>
                         '''
