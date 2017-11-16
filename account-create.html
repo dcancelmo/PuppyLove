@@ -5,6 +5,45 @@
 		<title>Puppy Love </title>
 		<meta charset="UTF-8">
 		<link rel = "stylesheet" type = "text/css" href = "style/style.css"/>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<!--<script>-->
+			<!--$.ajax({-->
+				<!--type: "POST",-->
+				<!--url: "/cgi-bin/account-create.py",-->
+				<!--beforeSend: function() {-->
+				    <!--if ($.password.text !== $.passwordConfirm.text) {-->
+						<!--$.passMatch.text("Passwords do not match")-->
+					<!--}-->
+				<!--},-->
+				<!--data: { param: " "},-->
+				<!--dataType: "text"-->
+			<!--}).done(function(response) {-->
+				<!--$('#response').html(response)-->
+			<!--});-->
+
+		<!--</script>-->
+		<!--<script>-->
+			<!--$(document).ready(function () {-->
+				<!--$('#pass').keypress(function (event) {-->
+                    <!--if ($('#pass').text !== $('#passConfirm').text) {-->
+    					<!--$('#passMatch').text("Passwords do not match");-->
+    					<!--$('#submit').prop('disabled', true);-->
+					<!--} else {-->
+						<!--$('#passMatch').text();-->
+						<!--$('#submit').prop('disabled', false);-->
+					<!--}-->
+                <!--});-->
+				<!--$('#passConfirm').keypress(function (event) {-->
+					<!--if ($('#pass').text !== $('#passConfirm').text) {-->
+    					<!--$('#passMatch').text("Passwords do not match");-->
+    					<!--$('#submit').prop('disabled', true);-->
+					<!--} else {-->
+						<!--$('#passMatch').text();-->
+						<!--$('#submit').prop('disabled', false);-->
+					<!--}-->
+            	<!--});-->
+            <!--});-->
+		<!--</script>-->
 	<body>
 		<div id="header">
 			<img src = "photos/logo.png" id = "logo">
@@ -14,13 +53,14 @@
 			<input type="text" name="username" placeholder = "Username">
 			<br>
 			<br>
-			<input type="password" name="password" placeholder = "Password">
+			<input type="password" name="password" id="pass" placeholder = "Password">
 			<br>
 			<br>
-			<input type="password" name="passwordConfirm" placeholder = "Confirm Password">
+			<input type="password" name="passwordConfirm"  id="passConfirm" placeholder = "Confirm Password">
+			<p id="passMatch"></p>
 			<br>
 			<br>
-			<button type="submit"> Create Account </button>
+			<button type="submit" id="submit"> Create Account </button>
 		</form>
 
 		<h4><a href="login.html">Go back to login!</a></h4>

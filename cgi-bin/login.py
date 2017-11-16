@@ -42,16 +42,93 @@ if stored_login_cookie:
                     '''
     else:
         form = cgi.FieldStorage()
+        if ('username' in form) & ('password' in form) & ('passwordConfirm' in form):
+            userName = form['username'].value
+            password = form['password'].value
+            rows = c.execute('SELECT * FROM users WHERE username = ?', [userName])
+            rows = rows.fetchone()
+            if rows is not None:
+                hashed_pass = rows[1]
+                salt = rows[2]
+                test_pass = password + salt
+                test_pass = sha256(test_pass.encode('ascii')).hexdigest()
+
+                if hashed_pass == test_pass:
+                    print 'Content-Type: text/html'
+                    cookie = Cookie.SimpleCookie()
+                    cookie['LOGIN'] = userName
+                    expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
+                    cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
+                    print cookie.output()
+                    print
+                    # print '''<html>
+                    #         <head>
+                    #             <title>Correct Login</title>
+                    #         </head>
+                    #         <body>
+                    #         <p>You are logged in</p>
+                    #         <p>'''
+                    # print "Your name: " + userName
+                    # print '''</p>
+                    #             <form method="post" action="/cgi-bin/logout.py"><br><br>
+                    #                 <button type="submit" class="btn-default" name="logout"> Logout </button>
+                    #             </form>
+                    #         </body>
+                    #         </html>
+                    #         '''
+                    #print "Content-Type: text/html"
+                    print open('../user_profile.html').read()
+                else:
+                    print 'Content-Type: text/html'
+                    print
+                    print '''<html>
+                            <head>
+                                <title>Incorrect Login</title>
+                            </head>
+                            <body>
+                                <p>Incorrect username/password</p>
+                                <p><a href="../login.html">Go back to login</a></p>
+                            </body>
+                            </html>
+                            '''
+            else:
+                print 'Content-Type: text/html'
+                print
+                print '''<html>
+                            <head>
+                                <title>Incorrect Login</title>
+                            </head>
+                            <body>
+                                <p>Incorrect username/password</p>
+                                <p><a href="../login.html">Go back to login</a></p>
+                            </body>
+                            </html>
+                            '''
+        else:
+            print 'Content-Type: text/html'
+            print
+            print '''<html>
+                                    <head>
+                                        <title>Invalid</title>
+                                    </head>
+                                    <body>
+                                        <h3>You did not fill every entry.</h3>
+                                        <p><a href="../login.html">Go back to login</a></p>
+                                    </body>
+                                </html>
+                                '''
+else:
+    form = cgi.FieldStorage()
+    if ('username' in form) & ('password' in form) & ('passwordConfirm' in form):
         userName = form['username'].value
         password = form['password'].value
-        rows = c.execute('SELECT * FROM users WHERE username = ?', [userName])
-        rows = rows.fetchone()
+        rowsCur = c.execute('SELECT * FROM users WHERE username = ?', [userName])
+        rows = rowsCur.fetchone()
         if rows is not None:
             hashed_pass = rows[1]
             salt = rows[2]
             test_pass = password + salt
             test_pass = sha256(test_pass.encode('ascii')).hexdigest()
-
             if hashed_pass == test_pass:
                 print 'Content-Type: text/html'
                 cookie = Cookie.SimpleCookie()
@@ -61,106 +138,57 @@ if stored_login_cookie:
                 print cookie.output()
                 print
                 # print '''<html>
-                #         <head>
-                #             <title>Correct Login</title>
-                #         </head>
-                #         <body>
-                #         <p>You are logged in</p>
-                #         <p>'''
+                #     <head>
+                #         <title>Correct Login</title>
+                #     </head>
+                #     <body>
+                #     <p>You are logged in</p>
+                #     <p>'''
                 # print "Your name: " + userName
                 # print '''</p>
-                #             <form method="post" action="/cgi-bin/logout.py"><br><br>
-                #                 <button type="submit" class="btn-default" name="logout"> Logout </button>
-                #             </form>
-                #         </body>
-                #         </html>
-                #         '''
-                #print "Content-Type: text/html"
+                #     </body>
+                #     </html>
+                #     '''
                 print open('../user_profile.html').read()
             else:
                 print 'Content-Type: text/html'
                 print
                 print '''<html>
-                        <head>
-                            <title>Incorrect Login</title>
-                        </head>
-                        <body>
-                            <p>Incorrect username/password</p>
-                            <p><a href="../login.html">Go back to login</a></p>
+                    <head>
+                        <title>Incorrect Login</title>
+                    </head>
+                    <body>
+                        <p>Incorrect username/password</p>
+                        <p><a href="../login.html">Go back to login</a></p>
                         </body>
-                        </html>
-                        '''
+                    </html>
+                    '''
         else:
             print 'Content-Type: text/html'
             print
             print '''<html>
-                        <head>
-                            <title>Incorrect Login</title>
-                        </head>
-                        <body>
-                            <p>Incorrect username/password</p>
-                            <p><a href="../login.html">Go back to login</a></p>
-                        </body>
-                        </html>
-                        '''
-else:
-    form = cgi.FieldStorage()
-    userName = form['username'].value
-    password = form['password'].value
-    rowsCur = c.execute('SELECT * FROM users WHERE username = ?', [userName])
-    rows = rowsCur.fetchone()
-    if rows is not None:
-        hashed_pass = rows[1]
-        salt = rows[2]
-        test_pass = password + salt
-        test_pass = sha256(test_pass.encode('ascii')).hexdigest()
-        if hashed_pass == test_pass:
-            print 'Content-Type: text/html'
-            cookie = Cookie.SimpleCookie()
-            cookie['LOGIN'] = userName
-            expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-            cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
-            print cookie.output()
-            print
-            # print '''<html>
-            #     <head>
-            #         <title>Correct Login</title>
-            #     </head>
-            #     <body>
-            #     <p>You are logged in</p>
-            #     <p>'''
-            # print "Your name: " + userName
-            # print '''</p>
-            #     </body>
-            #     </html>
-            #     '''
-            print open('../user_profile.html').read()
-        else:
-            print 'Content-Type: text/html'
-            print
-            print '''<html>
-                <head>
-                    <title>Incorrect Login</title>
-                </head>
-                <body>
-                    <p>Incorrect username/password</p>
-                    <p><a href="../login.html">Go back to login</a></p>
-                    </body>
-                </html>
-                '''
+                            <head>
+                                <title>Incorrect Login</title>
+                            </head>
+                            <body>
+                                <p>An error has occurred!</p>
+                                <p><a href="../login.html">Go back to login</a></p>
+                                </body>
+                            </html>
+                            '''
     else:
         print 'Content-Type: text/html'
         print
         print '''<html>
                         <head>
-                            <title>Incorrect Login</title>
+                            <title>Invalid</title>
                         </head>
                         <body>
-                            <p>An error has occurred!</p>
+                            <h3>You did not fill every entry.</h3>
                             <p><a href="../login.html">Go back to login</a></p>
-                            </body>
-                        </html>
-                        '''
+                        </body>
+                    </html>
+                    '''
 
 conn.commit()
 conn.close()
