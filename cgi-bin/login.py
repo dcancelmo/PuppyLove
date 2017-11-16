@@ -24,9 +24,9 @@ if stored_login_cookie:
         new_cookie = Cookie.SimpleCookie()
         new_cookie['LOGIN'] = cookie['LOGIN'].value
         expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-        new_cookie['LOGIN']['expires'] = str(expires)
+        new_cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
         print "Content-Type: text/html"
-        print new_cookie
+        print new_cookie.output()
         print
         print '''<html>
                     <head>
@@ -57,8 +57,8 @@ if stored_login_cookie:
                 cookie = Cookie.SimpleCookie()
                 cookie['LOGIN'] = userName
                 expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-                cookie['LOGIN']['expires'] = str(expires)
-                print cookie
+                cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
+                print cookie.output()
                 print
                 # print '''<html>
                 #         <head>
@@ -119,8 +119,8 @@ else:
             cookie = Cookie.SimpleCookie()
             cookie['LOGIN'] = userName
             expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-            cookie['LOGIN']['expires'] = str(expires)
-            print cookie
+            cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
+            print cookie.output()
             print
             # print '''<html>
             #     <head>
@@ -156,12 +156,8 @@ else:
                             <title>Incorrect Login</title>
                         </head>
                         <body>
-                            <p>An error has occurred!</p>'''
-        #                     <p> User: '''
-        # print str(rows) + " </p><p>"
-        # print userName
-        # print password
-        print '''<p><a href="../login.html">Go back to login</a></p>
+                            <p>An error has occurred!</p>
+                            <p><a href="../login.html">Go back to login</a></p>
                             </body>
                         </html>
                         '''

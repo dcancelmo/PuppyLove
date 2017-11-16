@@ -25,7 +25,7 @@ if stored_login_cookie:
             new_cookie = Cookie.SimpleCookie()
             new_cookie['LOGIN'] = cookie['LOGIN'].value
             expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-            new_cookie['LOGIN']['expires'] = expires.strftime("%a,%d%b%Y%H:%M:%SGMT")
+            new_cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
             print "Content-Type: text/html"
             print new_cookie
             print

@@ -47,9 +47,9 @@ else:
         c.execute('INSERT INTO users (username, password, timeCreated) VALUES (?, ?, ?)', [username, hashPass, timestamp])
         cookie = Cookie.SimpleCookie()
         cookie['LOGIN'] = username
-        expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-        cookie['LOGIN']['expires'] = str(expires)
-        print cookie
+        expires = datetime.datetime.now() + datetime.timedelta(days=30)
+        cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
+        print cookie.output()
         print
         print '''<html>
             <head>
@@ -60,6 +60,7 @@ else:
                 <h2>'''
         print "Username: " + username
         print "<br/>Time created: " + timestamp
+        print "<br/>" + cookie.output()
         print '''</h2>
                 <p><a href="cookieChecker.py">Go to main page</a>
             </body>
