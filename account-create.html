@@ -22,28 +22,28 @@
 			<!--});-->
 
 		<!--</script>-->
-		<script>
-			$(document).ready(function () {
-				$('#pass').keypress(function (event) {
-                    if ($('#pass').text !== $('#passConfirm').text) {
-    					$('#passMatch').text("Passwords do not match");
-    					$('#submit').prop('disabled', true);
-					} else {
-						$('#passMatch').text();
-						$('#submit').prop('disabled', false);
-					}
-                });
-				$('#passConfirm').keypress(function (event) {
-					if ($('#pass').text !== $('#passConfirm').text) {
-    					$('#passMatch').text("Passwords do not match");
-    					$('#submit').prop('disabled', true);
-					} else {
-						$('#passMatch').text();
-						$('#submit').prop('disabled', false);
-					}
-            	});
-            });
-		</script>
+		<!--<script>-->
+			<!--$(document).ready(function () {-->
+				<!--$('#pass').keypress(function (event) {-->
+                    <!--if ($('#pass').text !== $('#passConfirm').text) {-->
+    					<!--$('#passMatch').text("Passwords do not match");-->
+    					<!--$('#submit').prop('disabled', true);-->
+					<!--} else {-->
+						<!--$('#passMatch').text();-->
+						<!--$('#submit').prop('disabled', false);-->
+					<!--}-->
+                <!--});-->
+				<!--$('#passConfirm').keypress(function (event) {-->
+					<!--if ($('#pass').text !== $('#passConfirm').text) {-->
+    					<!--$('#passMatch').text("Passwords do not match");-->
+    					<!--$('#submit').prop('disabled', true);-->
+					<!--} else {-->
+						<!--$('#passMatch').text();-->
+						<!--$('#submit').prop('disabled', false);-->
+					<!--}-->
+            	<!--});-->
+            <!--});-->
+		<!--</script>-->
 	<body>
 		<div id="header">
 			<img src = "photos/logo.png" id = "logo">
