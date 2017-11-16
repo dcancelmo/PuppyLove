@@ -42,7 +42,7 @@ if stored_login_cookie:
                     '''
     else:
         form = cgi.FieldStorage()
-        if ('username' in form) & ('password' in form) & ('passwordConfirm' in form):
+        if ('username' in form) & ('password' in form):
             userName = form['username'].value
             password = form['password'].value
             rows = c.execute('SELECT * FROM users WHERE username = ?', [userName])
@@ -119,7 +119,7 @@ if stored_login_cookie:
                                 '''
 else:
     form = cgi.FieldStorage()
-    if ('username' in form) & ('password' in form) & ('passwordConfirm' in form):
+    if ('username' in form) & ('password' in form):
         userName = form['username'].value
         password = form['password'].value
         rowsCur = c.execute('SELECT * FROM users WHERE username = ?', [userName])
