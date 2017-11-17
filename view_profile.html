@@ -22,15 +22,16 @@
                 data: {param: " "},
                 
                 success: function(data){
-                    $("#username").text("hiaefl");
-                    var data = JSON.parse(data);
                     
+                    var data = JSON.parse(data);
+                    var userName = data.userName;
                     var name = data.humanName;
                     var humanPicSrc =data.humanPic;
                     var dogPicSrc = data.dogPic;
                     var dogName = data.dogName;
                     var genderPref = data.genderPref;
                     var description = data.description;
+                    $("#username").text(userName);
                     // '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
                     $('#profpic').html('<img id="profilepic_img"  src=\"data:;base64, ' + humanPicSrc + '\"/>');
                     $('#profile_head').text("Welcome, " + name + "!");
