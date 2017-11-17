@@ -24,8 +24,7 @@
 		<!--</script>-->
 		<style>
 			#passMatch {
-				size: 2em;
-				
+				color: red;
 			}
 		</style>
 		<script>
@@ -34,25 +33,21 @@
                     if ($('#pass').val() !== ($('#passConfirm').val())) {
 						console.log("pass not match");
     					$('#passMatch').text("Passwords do not match");
-//						$('#passMatch').prop('opacity', 1.0);
     					$('#submit').prop('disabled', true);
 					} else {
 						console.log("pass match");
 						$('#passMatch').text("");
-//						$('#passMatch').prop('opacity', 0.0);
 						$('#submit').prop('disabled', false);
 					}
                 });
 				$('#passConfirm').keyup(function (event) {
 					if ($('#pass').val() !== ($('#passConfirm').val())) {
 						console.log("passConfirm not match");
-//						$('#passMatch').prop('opacity', 1.0);
     					$('#passMatch').text("Passwords do not match");
     					$('#submit').prop('disabled', true);
 					} else {
 					    console.log("passConfirm match")
 						$('#passMatch').text("");
-//						$('#passMatch').prop('opacity', 0.0);
 						$('#submit').prop('disabled', false);
 					}
             	});
@@ -76,7 +71,7 @@
 				<button type="submit" id="submit"> Create Account </button>
 			</form>
 		</div>
-		<p id="passMatch"></p>
+		<h3 id="passMatch"></h3>
 		<h4><a href="login.html">Go back to login!</a></h4>
 	</body>
 </html>
