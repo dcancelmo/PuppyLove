@@ -7,6 +7,9 @@ import cgi
 import os
 
 cgitb.enable()
+#how to display BLOB image:
+#print '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
+#where humanPic is the original input from uploading the image
 
 print 'Content-Type: text/html'
 
@@ -16,6 +19,7 @@ form = cgi.FieldStorage()
 #Update database
 database_name = 'createUser.db'
 conn = sqlite3.connect(database_name)
+conn.text_factory = str
 c = conn.cursor()
 
 
@@ -26,8 +30,8 @@ def getCookieValue():
 
 
 userName = getCookieValue()
-
-c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key, humanName varchar(30), dogName varchar(30), description varchar(200), genderPref varchar(10))')
+#c.execute('DROP TABLE IF EXISTS profiles')
+c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key, userPic BLOB, humanName varchar(30), dogPic BLOB,  dogName varchar(30), description varchar(200), genderPref varchar(10))')
 
 # if 'humanName' in form:
 #     humanName = str(form['username'].value)
@@ -39,13 +43,17 @@ c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key,
 #     genderPref = str(form['gender'].value)
 
 humanName = str(form['username'].value)
+humanPic = str(form['userPic'].value)
+
+dogPic = str(form['dogPic'].value)
 dogName = str(form['dogName'].value)
+
 description = str(form['description'].value)
 genderPref = str(form['gender'].value)
 
 try:
     print
-    c.execute('INSERT INTO profiles(userName, humanName, dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanName, dogName, description, genderPref])
+    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
 
     print '''<html>
         <head>
@@ -56,6 +64,8 @@ try:
             <h2>'''
     print "Username: " + userName
     print "Name: " + humanName
+    print "userPic: " + humanPic.encode('base64')
+    print '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
     print "Your dog's name: " + dogName
     print "Description: " + description
     print "Gender Preference: " + genderPref
@@ -64,7 +74,7 @@ try:
     </html>
     '''
 except sqlite3.Error as er:
-    c.execute('UPDATE profiles SET humanName=? , dogName=? , description=? , genderPref=? WHERE userName=?', (humanName, dogName, description, genderPref, userName))
+    c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', (humanName, humanPic, dogPic, dogName, description, genderPref, userName))
     
     print
     print '''<html>
@@ -76,10 +86,13 @@ except sqlite3.Error as er:
             <h2>'''
     print "Username: " + userName
     print "Name: " + humanName
+    print "UserPic: " + humanPic.decode('base64')
+    print '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
     print "Your dog's name: " + dogName
     print "Description: " + description
     print "Gender Preference: " + genderPref
-    print'''</h2>
+    print'</h2>'
+    print '''
         </body>
     </html>
     '''
