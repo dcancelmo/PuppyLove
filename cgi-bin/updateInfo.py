@@ -53,7 +53,7 @@ genderPref = str(form['gender'].value)
 
 try:
     print
-    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
+    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ?, ?, ?, ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
 
     print '''<html>
         <head>
