@@ -27,15 +27,21 @@ def getCookieValue():
 
 userName = getCookieValue()
 
+c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key, humanName varchar(30), dogName varchar(30), description varchar(200), genderPref varchar(10))')
+
+# if 'humanName' in form:
+#     humanName = str(form['username'].value)
+# if 'dogName' in form:
+#     dogName = str(form['dogName'].value)
+# if 'description' in form:
+#     description = str(form['description'].value)
+# if 'genderPref' in form:
+#     genderPref = str(form['gender'].value)
 
 humanName = str(form['username'].value)
 dogName = str(form['dogName'].value)
 description = str(form['description'].value)
 genderPref = str(form['gender'].value)
-
-
-
-c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key, humanName varchar(30), dogName varchar(30), description varchar(200), genderPref varchar(10))')
 
 try:
     print

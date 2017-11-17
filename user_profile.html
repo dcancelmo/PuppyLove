@@ -25,23 +25,23 @@
 		<form action="/cgi-bin/updateInfo.py" method = "post" enctype="multipart/form-data">
             <h1 id="welcomeMessage"></h1>
 			<h2> Your Name: </h2>
-			<input type="text" name="username">
+			<input type="text" name="username" required>
 			<br>
             <h2> Profile Picture: </h2>
             <input type="file" name="userPic">
             <br>
             <h2> Your Dog's Name: </h2>
-            <input type="text" name="dogName">
+            <input type="text" name="dogName" required>
             <br>
             <h2> A Picture of your dog: </h2>
             <input type="file" name="dogPic">
             <br>
             <h2> Add a description: </h2>
-            <input type="text" name="description" size="40">
+            <input type="text" name="description" size="40" required>
             <br>
             
             <h2> Who are you interested in?: </h2>
-            <input type="radio" name="gender" value="male"> Male<br>
+            <input type="radio" name="gender" value="male" required> Male<br>
             <input type="radio" name="gender" value="female"> Female<br>
             <input type="radio" name="gender" value="both"> Both<br>
 
