@@ -53,8 +53,9 @@ genderPref = str(form['gender'].value)
 
 try:
     print
+
     c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?,?, ?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
-    #c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
+    
     user_row = c.execute("SELECT humanName FROM profiles WHERE userName=?", [userName])
     #conn.commit()
     user_row1 = user_row.fetchone()
@@ -88,6 +89,7 @@ try:
             </body>
         </html>
         '''
+
 except sqlite3.Error as er:
     c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
     #c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
