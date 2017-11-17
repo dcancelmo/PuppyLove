@@ -7,6 +7,7 @@ import cgi
 import os
 
 cgitb.enable()
+
 #how to display BLOB image:
 #print '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
 #where humanPic is the original input from uploading the image
@@ -19,7 +20,7 @@ form = cgi.FieldStorage()
 #Update database
 database_name = 'createUser.db'
 conn = sqlite3.connect(database_name)
-conn.text_factory = str
+conn.text_factory = str #need to change the text_factory for the images
 c = conn.cursor()
 
 
@@ -44,7 +45,6 @@ c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key,
 
 humanName = str(form['username'].value)
 humanPic = str(form['userPic'].value)
-
 dogPic = str(form['dogPic'].value)
 dogName = str(form['dogName'].value)
 
@@ -53,28 +53,44 @@ genderPref = str(form['gender'].value)
 
 try:
     print
-    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
-
-    print '''<html>
-        <head>
-            <title>Profile Updated</title>
-        </head>
-        <body>
-            <h1>Successfully updated profile!</h1>
-            <h2>'''
-    print "Username: " + userName
-    print "Name: " + humanName
-    print "userPic: " + humanPic.encode('base64')
-    print '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
-    print "Your dog's name: " + dogName
-    print "Description: " + description
-    print "Gender Preference: " + genderPref
-    print'''</h2>
-        </body>
-    </html>
-    '''
+    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?,?, ?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
+    #c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
+    user_row = c.execute("SELECT humanName FROM profiles WHERE userName=?", [userName])
+    #conn.commit()
+    user_row1 = user_row.fetchone()
+    if user_row1 is not None:
+        print '''<html>
+            <head>
+                <title>Profile Updated and the row is not none</title>
+            </head>
+            <body>
+                <h1>Successfully updated profile!</h1>
+            
+            </body>
+        </html>
+        '''
+    else:
+        print '''<html>
+            <head>
+                <title>Profile Updated -> did not update the table</title>
+            </head>
+            <body>
+                <h1>Successfully updated profile!</h1>
+                <h2>'''
+        print "Username: " + userName
+        print "Name: " + humanName
+        print "userPic: " + humanPic.encode('base64')
+        print '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
+        print "Your dog's name: " + dogName
+        print "Description: " + description
+        print "Gender Preference: " + genderPref
+        print'''</h2>
+            </body>
+        </html>
+        '''
 except sqlite3.Error as er:
-    c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', (humanName, humanPic, dogPic, dogName, description, genderPref, userName))
+    c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
+    #c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
     
     print
     print '''<html>
@@ -82,7 +98,7 @@ except sqlite3.Error as er:
             <title>Profile Updated</title>
         </head>
         <body>
-            <h1>Successfully updated profile!</h1>
+            <h1>Successfully updated profile! -> exception called</h1>
             <h2>'''
     print "Username: " + userName
     print "Name: " + humanName

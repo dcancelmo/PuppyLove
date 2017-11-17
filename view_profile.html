@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>View Profile</title>
+        <meta charset="UTF-8">
+        <link rel = "stylesheet" type = "text/css" href = "style/style.css" />
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script>
+            $.ajax({
+                type: "GET",
+                url: "/cgi-bin/getLoginCookie.py",
+                data: { param: " "},
+                dataType: "text"
+            }).done(function(response) {
+                document.title = response;
+                $("#profile_head").html(response + "'s Profile");
+
+            });
+            $.ajax({
+                type: "GET",
+                url: '/cgi-bin/getUserInfo.py',
+                data: {param: " "},
+                
+                success: function(data){
+                    $("#username").text("hiaefl");
+                    var data = JSON.parse(data);
+                    
+                    var name = data.humanName;
+                    var humanPicSrc =data.humanPic;
+                    var dogPicSrc = data.dogPic;
+                    var dogName = data.dogName;
+                    var genderPref = data.genderPref;
+                    var description = data.description;
+                    // '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
+                    $('#profpic').html('<img id="profilepic_img"  src=\"data:;base64, ' + humanPicSrc + '\"/>');
+                    $('#profile_head').text("Welcome, " + name + "!");
+                    $('#description').text(description);
+
+
+                    //alert("User's name is " + data['humanName'] );
+                    console.log(data.humanName);
+                },
+                error: function(jqXHR, textStatus, error){
+                    console.log("Error: " + error);
+                    console.log("jqXHR: " + jqXHR);
+                    console.log("Textstatus: " + textStatus);
+                    alert ("ERROR");
+                }
+
+            });
+        
+            
+        </script>
+        <style>
+            #profpic{
+                width:55%;
+                height:55%;
+                margin-right:2%;
+                float: left;
+                
+            }
+            #profilepic_img{
+                float: left;
+                display: inline;
+                width:30%;
+                height: 40%;
+                margin-left: 2%;
+                margin-top: 2%;
+                margin-bottom: 2%;
+            }
+            .description{
+                display: inline;
+                width:45%;
+                margin-left: 2%;
+                float: right;
+            }
+            .side{
+                display: inline-block;
+                /*border: 1px solid black;*/
+                width:70%;
+                height: 70%;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header">
+        <img src = "photos/logo.png" id = "logo">
+            
+        </div>
+        <h2 id="profile_head"> </h2>
+        <div class="side">
+            <div id="profpic"></div>
+            <h1>Your Description:</h1>
+            <h2 id="description"></h2>
+        </div>
+        
+        
+
+        
+    </body>
+</html>
