@@ -1,4 +1,4 @@
-#!C:\Python27\python.exe
+#!/usr/bin/env python
 
 import cgitb
 import sqlite3
@@ -12,22 +12,28 @@ print 'Content-Type: text/html'
 
 #Get form information
 form = cgi.FieldStorage()
-#NEED TO GET THE USERNAME FROM COOKIES
-#
-#
-userName = "Ryan"
-#
-#
-#
-humanName = str(form['username'].value)
-dogName = str(form['dogName'].value)
-description = str(form['description'].value)
-genderPref = str(form['gender'].value)
 
 #Update database
 database_name = 'createUser.db'
 conn = sqlite3.connect(database_name)
 c = conn.cursor()
+
+
+def getCookieValue():
+    stored_login_cookie = os.environ.get('HTTP_COOKIE')
+    cookie = Cookie.SimpleCookie(stored_login_cookie)
+    return cookie['LOGIN'].value
+
+
+userName = getCookieValue()
+
+
+humanName = str(form['username'].value)
+dogName = str(form['dogName'].value)
+description = str(form['description'].value)
+genderPref = str(form['gender'].value)
+
+
 
 c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key, humanName varchar(30), dogName varchar(30), description varchar(200), genderPref varchar(10))')
 
