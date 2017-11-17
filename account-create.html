@@ -6,22 +6,10 @@
 		<meta charset="UTF-8">
 		<link rel = "stylesheet" type = "text/css" href = "style/style.css"/>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-		<!--<script>-->
-			<!--$.ajax({-->
-				<!--type: "POST",-->
-				<!--url: "/cgi-bin/account-create.py",-->
-				<!--beforeSend: function() {-->
-				    <!--if ($.password.text !== $.passwordConfirm.text) {-->
-						<!--$.passMatch.text("Passwords do not match")-->
-					<!--}-->
-				<!--},-->
-				<!--data: { param: " "},-->
-				<!--dataType: "text"-->
-			<!--}).done(function(response) {-->
-				<!--$('#response').html(response)-->
-			<!--});-->
+		<script>
 
-		<!--</script>-->
+
+		</script>
 		<style>
 			#passMatch {
 				color: red;
@@ -29,6 +17,32 @@
 		</style>
 		<script>
 			$(document).ready(function () {
+			    $('#user').keyup(function (event) {
+			        $.ajax({
+						type: "GET",
+						url: "cgi-bin/createUser.db",
+						data: {username: $('#user').val()},
+						dataType: "text"
+					}).done(function (response) {
+						if (response !== null) {
+						    $('#passMatch').text("Username unavailable");
+    						$('#submit').prop('disabled', true);
+						}
+                    });
+//					$.ajax({
+//						type: "GET",
+//						url: "/cgi-bin/userAvailCheck.py",
+//						data: { param: $('#user').val()},
+//						dataType: "text"
+//					}).done(function(response) {
+//						if (response === true) {
+//							$('#submit').prop('disabled', false);
+//						} else {
+//							$('#passMatch').text("Entered username is not available");
+//							$('#submit').prop('disabled', true);
+//						}
+//					});
+                });
 				$('#pass').keyup(function (event) {
                     if ($('#pass').val() !== ($('#passConfirm').val())) {
 						console.log("pass not match");
@@ -59,7 +73,7 @@
 		</div>
 		<div id = "create">
 			<form action="cgi-bin/account-create.py" method = "post">
-				<input type="text" name="username" placeholder = "Username" required>
+				<input type="text" name="username" id="user" placeholder = "Username" required>
 				<br>
 				<br>
 				<input type="password" name="password" id="pass" placeholder = "Password" required>
