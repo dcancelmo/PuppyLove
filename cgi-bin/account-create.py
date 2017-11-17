@@ -84,8 +84,8 @@ if ('username' in form) & ('password' in form) & ('passwordConfirm' in form):
                     </body>
                 </html>
                 '''
-    conn.commit()
-    conn.close()
+        conn.commit()
+        conn.close()
 else:
     print
     print '''<html>
