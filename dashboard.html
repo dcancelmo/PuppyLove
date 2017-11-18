@@ -3,6 +3,36 @@
 <head>
 	<title>User Dashboard</title>
 	<link rel = "stylesheet" type = "text/css" href = "style/styleDash.css" />
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type = "javascript/text">
+		$(document).ready(function(){
+			$.ajax({
+				type: "GET",
+				url:"cgi-bin/get_pic.py",
+				data: {
+					//put user data here
+				}
+				datatype:"json",
+				success: function(return){
+					//add image data
+					$("#profile_pic").append();
+				}
+			});
+
+			$.ajax({
+				type: "GET",
+				url: "cgi-bin/get_prof.py",
+				data: {
+					//put user data here
+				}
+				datatype:"json",
+				success:function(return){
+					//add profile data
+					$("#profile_info").prepend("<p>"+return+"</o>");
+				}
+			});
+		});
+	</script>
 </head>
 <body>
 	<div id = "header">
