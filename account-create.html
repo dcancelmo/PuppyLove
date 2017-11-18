@@ -16,6 +16,10 @@
 			}
 		</style>
 		<script>
+			if(typeof sessionStorage['message'] !== 'undefined'){
+				alert(sessionStorage['message']);
+				sessionStorage.removeItem('message');
+			}
 			$(document).ready(function () {
 			    $('#user').keyup(function (event) {
 			        $.ajax({

@@ -77,10 +77,12 @@ if ('username' in form) & ('password' in form) & ('passwordConfirm' in form):
             print '''<html>
                     <head>
                         <title>Invalid</title>
+                        <script type = "text/javascript">
+                        	sessionStorage.setItem("message", "Username already taken please choose another.");
+                        	window.location.href = "../account-create.html";
+                        </script>
                     </head>
                     <body>
-                        <h3>Username unavailable</h3>
-                        <p><a href="../account-create.html">Go back to account creation</a></p>
                     </body>
                 </html>
                 '''
