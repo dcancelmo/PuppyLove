@@ -21,7 +21,7 @@ def getPotentialMatches():
 	parameters = cgi.FieldStorage()
 	c_genderPref = parameters.getvalue("genderPref")
 	c_gender = parameters.getvalue("gender")
-	
+	c_userName = parameters.getvalue("userName")
 	#print "Content-Type: application/json"
 	print
     #print cookie['LOGIN'].value
@@ -29,11 +29,11 @@ def getPotentialMatches():
 	username = cookie['LOGIN'].value
 	#print username
 	select_stmt = ''
-	select_stmt_both = "SELECT * FROM profiles WHERE genderPref='{}'".format(c_gender)
+	select_stmt_both = "SELECT * FROM profiles WHERE (genderPref='{}' OR genderPref='{}') AND userName !='{}'".format(c_gender, 'both', c_userName)
 	if c_genderPref == 'both':
 		select_stmt = select_stmt_both;
 	else:
-		select_stmt = "SELECT * FROM profiles WHERE gender='{}' AND (genderPref='{}' OR genderPref='{}')".format(c_genderPref, c_gender, 'both')
+		select_stmt = "SELECT * FROM profiles WHERE gender='{}' AND (genderPref='{}' OR genderPref='{}') AND userName!='{}'".format(c_genderPref, c_gender, 'both', c_userName)
 	user_rows = c.execute(select_stmt).fetchall()
 	# user_rows = c.execute('SELECT * FROM profiles WHERE gender=? AND (genderPref=? OR genderPref=?)',
 	#  ['female', 'male', 'both'])
