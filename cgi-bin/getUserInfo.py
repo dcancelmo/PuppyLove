@@ -34,8 +34,8 @@ def getUserProfileInfo():
 		with open('test.txt', 'w') as outfile:
 			json.dump(response, outfile)
 	if user_rows is not None:
-		# profiles(userName , userPic , humanName, dogPic,  dogName, description, genderPref);
-		response = {'genderPref': user_rows[6],'description': user_rows[5],'humanName': user_rows[2], 'dogName': user_rows[4], 'dogPic' : user_rows[3].encode('base64'), 'humanPic': user_rows[1].encode('base64'), 'userName': user_rows[0]}
+		# profiles(userName , userPic , humanName, dogPic,  dogName, description, genderPref, gender);
+		response = {'gender': user_rows[7],'genderPref': user_rows[6],'description': user_rows[5],'humanName': user_rows[2], 'dogName': user_rows[4], 'dogPic' : user_rows[3].encode('base64'), 'humanPic': user_rows[1].encode('base64')}
 		
 		with open('test.txt', 'w') as outfile:
 			json.dump(response, outfile)

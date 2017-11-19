@@ -32,7 +32,7 @@ def getCookieValue():
 
 userName = getCookieValue()
 #c.execute('DROP TABLE IF EXISTS profiles')
-c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key, userPic BLOB, humanName varchar(30), dogPic BLOB,  dogName varchar(30), description varchar(200), genderPref varchar(10))')
+c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key, userPic BLOB, humanName varchar(30), dogPic BLOB,  dogName varchar(30), description varchar(200), genderPref varchar(10), gender varchar(10))')
 
 # if 'humanName' in form:
 #     humanName = str(form['username'].value)
@@ -49,13 +49,13 @@ dogPic = str(form['dogPic'].value)
 dogName = str(form['dogName'].value)
 
 description = str(form['description'].value)
-genderPref = str(form['gender'].value)
+gender = str(form['gender'].value)
+genderPref = str(form['genderPref'].value)
 
 try:
     print
-
-    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?,?, ?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
-    
+    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref, gender])
+    #c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
     user_row = c.execute("SELECT humanName FROM profiles WHERE userName=?", [userName])
     #conn.commit()
     user_row1 = user_row.fetchone()
@@ -89,9 +89,8 @@ try:
             </body>
         </html>
         '''
-
 except sqlite3.Error as er:
-    c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
+    c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, gender, userName])
     #c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
     
     print
