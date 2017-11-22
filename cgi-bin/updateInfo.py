@@ -66,7 +66,8 @@ try:
             </head>
             <body>
                 <h1>Successfully updated profile!</h1>
-            
+                <h2><a href="../dashboard.html">Go to dashboard</a></h2>
+                <h2><a href="../view_profile.html">View Profile</a></h2>
             </body>
         </html>
         '''
@@ -77,6 +78,8 @@ try:
             </head>
             <body>
                 <h1>Successfully updated profile!</h1>
+                <h2><a href="../dashboard.html">Go to dashboard</a></h2>
+                <h2><a href="../view_profile.html">View Profile</a></h2>
                 <h2>'''
         print "Username: " + userName
         print "Name: " + humanName
@@ -99,8 +102,11 @@ except sqlite3.Error as er:
             <title>Profile Updated</title>
         </head>
         <body>
-            <h1>Successfully updated profile! -> exception called</h1>
-            <h2>'''
+            <h1>Successfully updated profile! -> exception called'''
+    print er.__str__() + '</h1>'
+    print '''<h2><a href="../dashboard.html">Go to dashboard</a></h2>
+                <h2><a href="../view_profile.html">View Profile</a></h2>'''
+    print '<h2>'
     print "Username: " + userName
     print "Name: " + humanName
     print "UserPic: " + humanPic.decode('base64')
