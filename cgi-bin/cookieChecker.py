@@ -29,38 +29,11 @@ if stored_login_cookie:
             print "Content-Type: text/html"
             print new_cookie
             print
-            # print '''<html>
-            #             <head>
-            #             <title>Correct Login</title>
-            #             </head>
-            #             <body>
-            #             <p>You logged in automatically with a cookie!</p>
-            #             <p>'''
-            # print 'Your name: ' + new_cookie['LOGIN'].value
-            # print '''</p>
-            #                 <form method="post" action="/cgi-bin/logout.py"><br><br>
-            #                     <button type="submit" class="btn-default" name="logout"> Logout </button>
-            #                 </form>
-            #             </body>
-            #             </html>
-            #             '''
             print open('../user_profile.html').read()
         else:
-            # print "Content-Type: text/html"
-            # print "Location: http://localhost/login.html"
-            # print
             print "Content-Type: text/html"
+            print "Location: ../loginMessages/errorMsg.html"
             print
-            print '''<html>
-                    <head>
-                        <title>Error</title>
-                    </head>
-                    <body>
-                        <p>An error has occurred.</p>
-                        <p><a href="../login.html">Go back</a></p>
-                    </body>
-                    </html>
-                    '''
     else:
         print "Content-Type: text/html"
         print "Location: ../login.html"
