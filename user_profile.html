@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <html>
-    <head>
-        <title>Puppy Love </title>
-        <meta charset="UTF-8">
-        <style>
+	<head>
+		<title>Puppy Love </title>
+		<meta charset="UTF-8">
+		<style>
             body {
                 text-align: center;
                 font-family: sans-serif;
             }
-        </style>
+		</style>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
         $.ajax({
@@ -22,12 +22,12 @@
         });
         
     </script>
-    <body>
-        <form action="/cgi-bin/updateInfo.py" method = "post" enctype="multipart/form-data">
+	<body>
+		<form action="/cgi-bin/updateInfo.py" method = "post" enctype="multipart/form-data">
             <h1 id="welcomeMessage"></h1>
-            <h2> Your Name: </h2>
-            <input type="text" name="username" required>
-            <br>
+			<h2> Your Name: </h2>
+			<input type="text" name="username" required>
+			<br>
             <h2> Profile Picture: </h2>
             <input type="file" name="userPic">
             <br>
@@ -40,21 +40,16 @@
             <h2> Add a description: </h2>
             <input type="text" name="description" size="40" required>
             <br>
-
-            <h2> Your Gender: </h2>
+            
+            <h2> Who are you interested in?: </h2>
             <input type="radio" name="gender" value="male" required> Male<br>
             <input type="radio" name="gender" value="female"> Female<br>
-            
-            <br>
-            <h2> Who are you interested in?: </h2>
-            <input type="radio" name="genderPref" value="male" required> Male<br>
-            <input type="radio" name="genderPref" value="female"> Female<br>
-            <input type="radio" name="genderPref" value="both"> Both<br>
+            <input type="radio" name="gender" value="both"> Both<br>
 
-            <button type="submit"> Update </button>
-        </form>
+			<button type="submit"> Update </button>
+		</form>
         <form method="post" action="/cgi-bin/logout.py"><br>
             <button type="submit" class="btn-default" name="logout"> Logout </button>
         </form>
-    </body>
+	</body>
 </html>

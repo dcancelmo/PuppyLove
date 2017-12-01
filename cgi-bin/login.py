@@ -19,7 +19,7 @@ if stored_login_cookie:
     cookie = Cookie.SimpleCookie(stored_login_cookie)
     rows = c.execute('SELECT * FROM users WHERE username = ?', [cookie['LOGIN'].value])
     #rows = rows.fetchone()
-    if rows.rowcount > 0: #unused code block?
+    if rows.rowcount > 0:
         # Resets expires to be 30 days from last login
         new_cookie = Cookie.SimpleCookie()
         new_cookie['LOGIN'] = cookie['LOGIN'].value
@@ -79,17 +79,44 @@ if stored_login_cookie:
                     #print "Content-Type: text/html"
                     print open('../user_profile.html').read()
                 else:
-                    print "Content-Type: text/html"
-                    print "Location: ../loginMessages/incorrect.html"
+                    print 'Content-Type: text/html'
                     print
+                    print '''<html>
+                            <head>
+                                <title>Incorrect Login</title>
+                            </head>
+                            <body>
+                                <p>Incorrect username/password</p>
+                                <p><a href="../login.html">Go back to login</a></p>
+                            </body>
+                            </html>
+                            '''
             else:
-                print "Content-Type: text/html"
-                print "Location: ../loginMessages/incorrect.html"
+                print 'Content-Type: text/html'
                 print
+                print '''<html>
+                            <head>
+                                <title>Incorrect Login</title>
+                            </head>
+                            <body>
+                                <p>Incorrect username/password</p>
+                                <p><a href="../login.html">Go back to login</a></p>
+                            </body>
+                            </html>
+                            '''
         else:
             print 'Content-Type: text/html'
-            print "Location: ../loginMessages/missingInfo.html"
             print
+            print '''<html>
+                                    <head>
+                                        <title>Invalid</title>
+                                    </head>
+                                    <body>
+                                        <h3>You did not fill every entry.</h3>
+                                        <p><a href="../login.html">Go back to login</a></p>
+                                    </body>
+                                </html>
+                                '''
 else:
     form = cgi.FieldStorage()
     if ('username' in form) & ('password' in form):
@@ -124,18 +151,44 @@ else:
                 #     '''
                 print open('../user_profile.html').read()
             else:
-                print "Content-Type: text/html"
-                print "Location: ../loginMessages/incorrect.html"
+                print 'Content-Type: text/html'
                 print
+                print '''<html>
+                    <head>
+                        <title>Incorrect Login</title>
+                    </head>
+                    <body>
+                        <p>Incorrect username/password</p>
+                        <p><a href="../login.html">Go back to login</a></p>
+                        </body>
+                    </html>
+                    '''
         else:
             print 'Content-Type: text/html'
-            print "Location: ../loginMessages/errorMsg.html"
             print
+            print '''<html>
+                            <head>
+                                <title>Incorrect Login</title>
+                            </head>
+                            <body>
+                                <p>An error has occurred!</p>
+                                <p><a href="../login.html">Go back to login</a></p>
+                                </body>
+                            </html>
+                            '''
     else:
-        #It shouldn't ever reach here, but just in case
-        print "Content-Type: text/html"
-        print "Location: ../loginMessages/missingInfo.html"
+        print 'Content-Type: text/html'
         print
+        print '''<html>
+                        <head>
+                            <title>Invalid</title>
+                        </head>
+                        <body>
+                            <h3>You did not fill every entry.</h3>
+                            <p><a href="../login.html">Go back to login</a></p>
+                        </body>
+                    </html>
+                    '''
 
 conn.commit()
 conn.close()

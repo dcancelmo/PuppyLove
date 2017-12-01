@@ -32,7 +32,7 @@ def getCookieValue():
 
 userName = getCookieValue()
 #c.execute('DROP TABLE IF EXISTS profiles')
-c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key, userPic BLOB, humanName varchar(30), dogPic BLOB,  dogName varchar(30), description varchar(200), genderPref varchar(10), gender varchar(10))')
+c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key, userPic BLOB, humanName varchar(30), dogPic BLOB,  dogName varchar(30), description varchar(200), genderPref varchar(10))')
 
 # if 'humanName' in form:
 #     humanName = str(form['username'].value)
@@ -49,13 +49,13 @@ dogPic = str(form['dogPic'].value)
 dogName = str(form['dogName'].value)
 
 description = str(form['description'].value)
-gender = str(form['gender'].value)
-genderPref = str(form['genderPref'].value)
+genderPref = str(form['gender'].value)
 
 try:
     print
-    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref, gender])
-    #c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
+
+    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?,?, ?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
+    
     user_row = c.execute("SELECT humanName FROM profiles WHERE userName=?", [userName])
     #conn.commit()
     user_row1 = user_row.fetchone()
@@ -66,8 +66,7 @@ try:
             </head>
             <body>
                 <h1>Successfully updated profile!</h1>
-                <h2><a href="../dashboard.html">Go to dashboard</a></h2>
-                <h2><a href="../view_profile.html">View Profile</a></h2>
+            
             </body>
         </html>
         '''
@@ -78,8 +77,6 @@ try:
             </head>
             <body>
                 <h1>Successfully updated profile!</h1>
-                <h2><a href="../dashboard.html">Go to dashboard</a></h2>
-                <h2><a href="../view_profile.html">View Profile</a></h2>
                 <h2>'''
         print "Username: " + userName
         print "Name: " + humanName
@@ -92,8 +89,9 @@ try:
             </body>
         </html>
         '''
+
 except sqlite3.Error as er:
-    c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, gender, userName])
+    c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
     #c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
     
     print
@@ -102,11 +100,8 @@ except sqlite3.Error as er:
             <title>Profile Updated</title>
         </head>
         <body>
-            <h1>Successfully updated profile! -> exception called'''
-    print er.__str__() + '</h1>'
-    print '''<h2><a href="../dashboard.html">Go to dashboard</a></h2>
-                <h2><a href="../view_profile.html">View Profile</a></h2>'''
-    print '<h2>'
+            <h1>Successfully updated profile! -> exception called</h1>
+            <h2>'''
     print "Username: " + userName
     print "Name: " + humanName
     print "UserPic: " + humanPic.decode('base64')

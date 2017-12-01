@@ -21,7 +21,6 @@ if ('username' in form) & ('password' in form) & ('passwordConfirm' in form):
     password = str(form['password'].value)
     passwordConfirm = str(form['passwordConfirm'].value)
     if password != passwordConfirm:
-        # It shouldn't ever reach here. But...
         print
         print '''<html>
                 <head>
@@ -90,7 +89,6 @@ if ('username' in form) & ('password' in form) & ('passwordConfirm' in form):
         conn.commit()
         conn.close()
 else:
-    # It shouldn't ever reach here. But just in case...
     print
     print '''<html>
                 <head>
