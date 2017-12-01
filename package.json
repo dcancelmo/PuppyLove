@@ -2,7 +2,7 @@
   "name": "term-project-sql-injectors",
   "version": "1.0.0",
   "description": "dating application",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "here"
   },
