@@ -110,18 +110,6 @@ else:
                 cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
                 print cookie.output()
                 print
-                # print '''<html>
-                #     <head>
-                #         <title>Correct Login</title>
-                #     </head>
-                #     <body>
-                #     <p>You are logged in</p>
-                #     <p>'''
-                # print "Your name: " + userName
-                # print '''</p>
-                #     </body>
-                #     </html>
-                #     '''
                 print open('../user_profile.html').read()
             else:
                 print "Content-Type: text/html"
