@@ -5,7 +5,7 @@
     <title>User Dashboard</title>
     <link rel = "stylesheet" type = "text/css" href = "style/styleDash.css" />
     <style>
-        .match img{
+            .match img{
                 position: center;
                 width:55%;
                 height:55%;
@@ -31,10 +31,72 @@
                 margin: 2px;
                 float: left;
             }
-           
+           /*.like_or_hate{
+                display: inline-block;
+                position: relative;
+                border: 1px solid black;
+                width:60%;
+                height: 20%;
+                overflow: hidden;
+           }*/
+           .like_or_hate, .container{
+                /*display: inline-block;
+                position: relative;*/
+                
+                /*width:60%;
+                height: 20%;*/
+                margin-right: 2%;
+                overflow: hidden;
+           }
+           .like_or_hate img{
+                width: 50%;
+                padding-bottom: 10%;
+                padding-top: 5%;
+           }
     </style>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
+
+    function updateUserLocation(pos,radius){
+      $.ajax({
+            type: "GET",
+            url: "/cgi-bin/UserLocation.py",
+            data:{"longitude" : pos.longitude, "latitude" : pos.latitude, 
+                "radius" : radius},
+            success: function(response){
+                console.log("Radius: "+ radius);
+                console.log("updatedUserLocation successfully");
+                console.log("response" + response);
+            },
+            error: function(){
+                console.log("halp");
+            }
+            
+        });
+   }
+    $(function getLocation(){
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            
+            
+        
+            radius = 30;
+            console.log("Position: " + pos.lat);
+            
+            updateUserLocation(position.coords, radius);
+          }, function() {
+            handleLocationError(true);
+          });
+
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false);
+        }
+    });
      $.ajax({
                 type: "GET",
                 url: '/cgi-bin/getUserInfo.py',
@@ -52,20 +114,24 @@
                     var gender = data.gender;
                     var userName = data.userName;
                     var description = data.description;
+                    var longitude = data.longitude;
+                    var latitude = data.latitude;
+                    var radius = data.radius;
                     $('#dashboard_welcome').text(name + "'s Dashboard");
                     //alert("User's name is " + data['humanName'] );
                    // console.log(data.humanName);
-                    passGender(genderPref, gender, userName);
+                    passGender(genderPref, gender, userName, longitude, latitude, radius);
                 },
                 error: function(jqXHR, textStatus, error){
                     console.log("error from getUserInfo")
                 }
             });
-            function passGender(genderPref, gender, userName){
+            function passGender(genderPref, gender, userName, longitude, latitude, radius){
                 $.ajax({
                     type: "GET",
                     url: '/cgi-bin/getPotentialMatches.py',
-                    data: {"genderPref": genderPref, "gender" : gender, "userName" : userName},
+                    data: {"genderPref": genderPref, "gender" : gender, "userName" : userName,
+                            "longitude": longitude, "latitude" : latitude, "radius" : radius},
                     success: function(data){
                         
                         console.log("genderpref: "+ genderPref);
@@ -85,8 +151,7 @@
 
                             dogName = item['dogName'];
                             description = item['description'];
-                            htmlstring += "<div class=\"match\" id=\"" +username + "\"><div class=\"human\"> <h2 class=\"humanName\"> Human: " + humanName + " </h2><br> <img class=\"profpic\" src=\"data:;base64, " + humanPic + "\"/></div><div class=\"dog\"> <h2 class=\"dogname\"> Dog:" + dogName + "</h2> <img class=\"dogpic\" src=\"data:;base64, " + dogPic + "\"/> </div> <br> <H2 class=\"description\">Description: </h2><br> <p> " + description + " </p>"
-                                htmlstring += "</div>";
+                            htmlstring += "<div class=\"match\" id=\"" +username + "\"><div class=\"human\"> <h2 class=\"humanName\"> Human: " + humanName + " </h2><br> <img class=\"profpic\" src=\"data:;base64, " + humanPic + "\"/></div><div class=\"dog\"> <h2 class=\"dogname\"> Dog:" + dogName + "</h2> <img class=\"dogpic\" src=\"data:;base64, " + dogPic + "\"/> </div> <br> <h2 class=\"description\">Description: </h2><br> <p> " + description + " <br> Longitude: " + longitude + ", Latitude: "+ latitude + " </p>" + "<div class=\"like_or_hate\"> <div class=\"container\"><img class=\"like\" id=\"match_" + username + "\" src=\"photos/like.png\" onclick=\"like(" +username+")\"></div><div class=\"container\"> <img class=\"hate\" id=\"pass_"+username +"\" src=\"photos/hate.png\" onclick=\"pass("+username+")\"></div></div></div>";
                             
                         });
                         $('#users').append(htmlstring);
@@ -103,6 +168,14 @@
 
                 });
                 
+            }
+            function like(username){
+                //add to matches
+                alert("You really want to like this person?");
+            }
+            function pass(username){
+                //add to pass
+                alert("You really want to pass this person?");
             }
 </script>
 
