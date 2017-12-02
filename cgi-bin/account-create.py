@@ -58,7 +58,7 @@ if ('username' in form) & ('password' in form) & ('passwordConfirm' in form):
             print cookie.output()
             print "Location: ../user_profile.html"
             print
-            print open()
+            # print open()
         # else:
         except sqlite3.IntegrityError:
             print
