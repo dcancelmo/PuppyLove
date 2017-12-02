@@ -29,7 +29,7 @@ if stored_login_cookie:
             print "Content-Type: text/html"
             print new_cookie
             print
-            print open('../user_profile.html').read()
+            print open('../dashboard.html').read()
         else:
             print "Content-Type: text/html"
             print "Location: ../loginMessages/errorMsg.html"

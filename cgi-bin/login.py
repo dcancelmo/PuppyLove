@@ -77,7 +77,7 @@ if stored_login_cookie:
                     #         </html>
                     #         '''
                     #print "Content-Type: text/html"
-                    print open('../user_profile.html').read()
+                    print open('../dashboard.html').read()
                 else:
                     print "Content-Type: text/html"
                     print "Location: ../loginMessages/incorrect.html"
@@ -122,7 +122,7 @@ else:
                 #     </body>
                 #     </html>
                 #     '''
-                print open('../user_profile.html').read()
+                print open('../dashboard.html').read()
             else:
                 print "Content-Type: text/html"
                 print "Location: ../loginMessages/incorrect.html"
