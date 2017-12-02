@@ -2,24 +2,8 @@
 <html lang="en">
     <head>
         <title>Socket.IO Chat Example</title>
-
-        <!--
-            Socket.IO is a library that provides an API around web sockets.  It inserts
-            a layer of abstraction between your code and the actual web sockets.  One major
-            advantage of using it is that it handles the "proxy" issue (if the proxy refuses
-            to upgrade an HTTP connection to a web socket connection, socket.io will
-            use alternative means toc ommunicate.
-        -->
         <script src="socket.io/socket.io.js"></script>
-        <!--
-            jQuery is used in the usual way; to handle events from buttons/forms and to
-            update/add elements to the DOM
-        -->
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-
-        <!--
-            Stylizes the chat application to look like a chat application.
-        -->
         <style>
             * {
                 margin: 0;
@@ -62,26 +46,30 @@
         </style>
     </head>
     <body>
-        <!--
-            messages are added to this unordered list as they come in.  Every other
-            message will be colored with a light gray background so that messages can be
-            distinguished from each other.
-        -->
+   
         <ul id="messages"></ul>
-        <!--
-            the form used to represent the input field and the "send" button.  the user
-            types messages into the field and then either presses ENTER or clicks the
-            Send button.
-        -->
+      
         <form action="">
-            <input id="m" autocomplete="off" /><button>Send</button>
+            <input id="m" autocomplete="off"/><button>Send</button>
         </form>
-        <!--
-            This script is called when the form is submitted.  Unlike other JavaScript
-            we have examined, this script must be included in the BODY of the HTML
-            (not the header).
-        -->
+       
         <script>
+
+        function getCookie(cname) {
+                var name = cname + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for(var i = 0; i <ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
             // web sockets do allow cross-domain connections.  It is generally up to the
             // server to determine whether or not a connection from an incoming client
             // should be accepted or not.
