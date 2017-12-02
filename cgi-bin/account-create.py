@@ -81,7 +81,7 @@ if ('username' in form) & ('password' in form) & ('passwordConfirm' in form):
                     <head>
                         <title>Invalid</title>
                         <script type = "text/javascript">
-                        	sessionStorage.setItem("message", "Username already taken please choose another.");
+                        	alert("Username already taken please choose another.");
                         	window.location.href = "../account-create.html";
                         </script>
                     </head>
