@@ -56,7 +56,7 @@ if ('username' in form) & ('password' in form) & ('passwordConfirm' in form):
             expires = datetime.datetime.now() + datetime.timedelta(days=30)
             cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
             print cookie.output()
-            print "Location: ../user_profile.html"
+            print "Location: ../req_user_info.html"
             print
             # print open()
         # else:
