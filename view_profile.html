@@ -33,13 +33,14 @@
                     var gender = data.gender;
                     var description = data.description;
                     // '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
-                    $('#profpic').html('<img id="profilepic_img"  src=\"data:;base64, ' + humanPicSrc + '\"/>');
+                    $('#human_name').text("Human name: " + name);
+                    $('#profpic').html('<img id="profilepic_img" width="250dp" src=\"data:;base64, ' + humanPicSrc + '\"/>');
                     $('#profile_head').text("Welcome, " + name + "!");
-                    $('#description').text(description);
-                    $('#dogs_name').text(dogName);
-                    $('#dogpic').html('<img id="dogpic_img"  src=\"data:;base64, ' + dogPicSrc + '\"/>');
-                    $('#gender').text(gender.charAt(0).toUpperCase() + gender.slice(1));
-                    $('#gender_interest').text(genderPref.charAt(0).toUpperCase() + genderPref.slice(1));
+                    $('#description').text("Description: " + description);
+                    $('#dogs_name').text("Dog Name: " + dogName);
+                    $('#dogpic').html('<img id="dogpic_img" width="250dp" src=\"data:;base64, ' + dogPicSrc + '\"/>');
+                    $('#gender').text("Your gender: " + gender.charAt(0).toUpperCase() + gender.slice(1));
+                    $('#gender_interest').text("Who you are interested in: " + genderPref.charAt(0).toUpperCase() + genderPref.slice(1));
 
 
 //                    alert("User's name is " + data['humanName'] );
@@ -121,16 +122,13 @@
         </div>
         <!--<h2 id="profile_head"> </h2>-->
         <div class="side">
+            <h2 id="human_name"></h2>
             <div id="profpic"></div>
-            <h1>Your Description:</h1>
-            <h2 id="description"></h2>
-            <div id="dogpic"></div>
-            <h1>Your Dog's Name:</h1>
             <h2 id="dogs_name"></h2>
-            <h1>Your Gender:</h1>
-            <h2 id="gender"></h2>
-            <h1>Who you are interested in:</h1>
-            <h2 id="gender_interest"></h2>
+            <div id="dogpic"></div>
+            <h3 id="description"></h3>
+            <h4 id="gender"></h4>
+            <h4 id="gender_interest"></h4>
         </div>
     </body>
 </html>
