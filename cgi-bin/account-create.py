@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+#!C:/Python27/python.exe
+
 
 import cgitb
 import sqlite3

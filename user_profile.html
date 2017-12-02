@@ -4,6 +4,7 @@
     <head>
         <title>Puppy Love </title>
         <meta charset="UTF-8">
+        <link rel = "stylesheet" type = "text/css" href = "style/styleDash.css" />
         <style>
             body {
                 text-align: center;
@@ -18,11 +19,25 @@
             data: { param: " "},
             dataType: "text"
         }).done(function(response) {
-            $('#welcomeMessage').html(response+ " is logged in")
+            $('#welcomeMessage').html("Login username: " + response)
         });
         
     </script>
     <body>
+    <div id = "header">
+        <img src = "photos/logo.png" id = "logo">
+        <h1> Update Profile </h1>
+    </div>
+    <div id = "navbar">
+        <ul>
+            <li><a href = "dashboard.html">Dashboard</a></li>
+            <li><a href="view_profile.html">View Profile</a></li>
+            <li><a href = "">Matches</a></li>
+            <li><a href = "">Messages</a></li>
+            <li><a href = "user_profile.html">Settings</a></li>
+            <li><a href = "cgi-bin/logout.py">Log out</a></li>
+        </ul>
+    </div>
         <form action="/cgi-bin/updateInfo.py" method = "post" enctype="multipart/form-data">
             <h1 id="welcomeMessage"></h1>
             <h2> Your Name: </h2>
@@ -52,9 +67,6 @@
             <input type="radio" name="genderPref" value="both"> Both<br>
 
             <button type="submit"> Update </button>
-        </form>
-        <form method="post" action="/cgi-bin/logout.py"><br>
-            <button type="submit" class="btn-default" name="logout"> Logout </button>
         </form>
     </body>
 </html>

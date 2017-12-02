@@ -1,6 +1,8 @@
 #!/usr/bin/env python
+
 import math
 from math import sin, cos, sqrt, atan2, radians
+
 import cgitb
 import os
 import cgi

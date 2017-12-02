@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#!C:/Python27/python.exe
 
 import cgitb
 import sqlite3
@@ -28,8 +29,9 @@ if stored_login_cookie:
             new_cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
             print "Content-Type: text/html"
             print new_cookie
+            print "Location: ../dashboard.html"
             print
-            print open('../user_profile.html').read()
+            # print open('../dashboard.html').read()
         else:
             print "Content-Type: text/html"
             print "Location: ../loginMessages/errorMsg.html"
