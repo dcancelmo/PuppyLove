@@ -53,72 +53,78 @@ gender = str(form['gender'].value)
 genderPref = str(form['genderPref'].value)
 
 try:
-    print
     c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref, gender])
     #c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
     user_row = c.execute("SELECT humanName FROM profiles WHERE userName=?", [userName])
     #conn.commit()
     user_row1 = user_row.fetchone()
     if user_row1 is not None:
-        print '''<html>
-            <head>
-                <title>Profile Updated and the row is not none</title>
-            </head>
-            <body>
-                <h1>Successfully updated profile!</h1>
-                <h2><a href="../dashboard.html">Go to dashboard</a></h2>
-                <h2><a href="../view_profile.html">View Profile</a></h2>
-            </body>
-        </html>
-        '''
+        print "Location: ../dashboard.html"
+        print
+        # print '''<html>
+        #     <head>
+        #         <title>Profile Updated and the row is not none</title>
+        #     </head>
+        #     <body>
+        #         <h1>Successfully updated profile!</h1>
+        #         <h2><a href="../dashboard.html">Go to dashboard</a></h2>
+        #         <h2><a href="../view_profile.html">View Profile</a></h2>
+        #     </body>
+        # </html>
+        # '''
     else:
-        print '''<html>
-            <head>
-                <title>Profile Updated -> did not update the table</title>
-            </head>
-            <body>
-                <h1>Successfully updated profile!</h1>
-                <h2><a href="../dashboard.html">Go to dashboard</a></h2>
-                <h2><a href="../view_profile.html">View Profile</a></h2>
-                <h2>'''
-        print "Username: " + userName
-        print "Name: " + humanName
-        print "userPic: " + humanPic.encode('base64')
-        print '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
-        print "Your dog's name: " + dogName
-        print "Description: " + description
-        print "Gender Preference: " + genderPref
-        print'''</h2>
-            </body>
-        </html>
-        '''
+        print "Location: ../dashboard.html"
+        print
+        # print '''<html>
+        #     <head>
+        #         <title>Profile Updated -> did not update the table</title>
+        #     </head>
+        #     <body>
+        #         <h1>Successfully updated profile!</h1>
+        #         <h2><a href="../dashboard.html">Go to dashboard</a></h2>
+        #         <h2><a href="../view_profile.html">View Profile</a></h2>
+        #         <h2>'''
+        # print "Username: " + userName
+        # print "Name: " + humanName
+        # print "userPic: " + humanPic.encode('base64')
+        # print '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
+        # print "Your dog's name: " + dogName
+        # print "Description: " + description
+        # print "Gender Preference: " + genderPref
+        # print'''</h2>
+        #     </body>
+        # </html>
+        # '''
 except sqlite3.Error as er:
     c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, gender, userName])
     #c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
-    
+
+    print "Location: ../dashboard.html"
     print
-    print '''<html>
-        <head>
-            <title>Profile Updated</title>
-        </head>
-        <body>
-            <h1>Successfully updated profile! -> exception called'''
-    print er.__str__() + '</h1>'
-    print '''<h2><a href="../dashboard.html">Go to dashboard</a></h2>
-                <h2><a href="../view_profile.html">View Profile</a></h2>'''
-    print '<h2>'
-    print "Username: " + userName
-    print "Name: " + humanName
-    print "UserPic: " + humanPic.decode('base64')
-    print '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
-    print "Your dog's name: " + dogName
-    print "Description: " + description
-    print "Gender Preference: " + genderPref
-    print'</h2>'
-    print '''
-        </body>
-    </html>
-    '''
+
+    # print
+    # print '''<html>
+    #     <head>
+    #         <title>Profile Updated</title>
+    #     </head>
+    #     <body>
+    #         <h1>Successfully updated profile! -> exception called'''
+    # print er.__str__() + '</h1>'
+    # print '''<h2><a href="../dashboard.html">Go to dashboard</a></h2>
+    #             <h2><a href="../view_profile.html">View Profile</a></h2>'''
+    # print '<h2>'
+    # print "Username: " + userName
+    # print "Name: " + humanName
+    # print "UserPic: " + humanPic.decode('base64')
+    # print '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
+    # print "Your dog's name: " + dogName
+    # print "Description: " + description
+    # print "Gender Preference: " + genderPref
+    # print'</h2>'
+    # print '''
+    #     </body>
+    # </html>
+    # '''
 
 conn.commit()
 conn.close()

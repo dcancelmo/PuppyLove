@@ -29,19 +29,6 @@
     						$('#submit').prop('disabled', true);
 						}
                     });
-//					$.ajax({
-//						type: "GET",
-//						url: "/cgi-bin/userAvailCheck.py",
-//						data: { param: $('#user').val()},
-//						dataType: "text"
-//					}).done(function(response) {
-//						if (response === true) {
-//							$('#submit').prop('disabled', false);
-//						} else {
-//							$('#passMatch').text("Entered username is not available");
-//							$('#submit').prop('disabled', true);
-//						}
-//					});
                 });
 				$('#pass').keyup(function (event) {
                     if ($('#pass').val() !== ($('#passConfirm').val())) {
@@ -86,6 +73,6 @@
 			</form>
 		</div>
 		<h3 id="passMatch"></h3>
-		<h4><a href="login.html">Go back to login!</a></h4>
+		<h4><a href="login.html">Go back to login</a></h4>
 	</body>
 </html>
