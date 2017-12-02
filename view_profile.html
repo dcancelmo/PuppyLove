@@ -3,7 +3,7 @@
     <head>
         <title>View Profile</title>
         <meta charset="UTF-8">
-        <link rel = "stylesheet" type = "text/css" href = "style/style.css" />
+        <link rel = "stylesheet" type = "text/css" href = "style/styleDash.css" />
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script>
             $.ajax({
@@ -102,20 +102,24 @@
     </head>
     <body>
         <div id="header">
-        <img src = "photos/logo.png" id = "logo">
-            
+            <img src = "photos/logo.png" id = "logo">
+            <h1 id="profile_head"></h1>
         </div>
-        <h2 id="profile_head"> </h2>
+        <div id = "navbar">
+            <ul>
+                <li><a href = "dashboard.html">Dashboard</a></li>
+                <li><a href="view_profile.html">View Profile</a></li>
+                <li><a href = "">Matches</a></li>
+                <li><a href = "">Messages</a></li>
+                <li><a href = "user_profile.html">Settings</a></li>
+                <li><a href = "cgi-bin/logout.py">Log out</a></li>
+            </ul>
+        </div>
+        <!--<h2 id="profile_head"> </h2>-->
         <div class="side">
             <div id="profpic"></div>
             <h1>Your Description:</h1>
             <h2 id="description"></h2>
         </div>
-        <br>
-        <a href="dashboard.html"> View Your Dashboard </a>
-        
-        
-
-        
     </body>
 </html>
