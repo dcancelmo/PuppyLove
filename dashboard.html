@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+
 <meta charset="UTF-8">
     <title>User Dashboard</title>
     <link rel = "stylesheet" type = "text/css" href = "style/styleDash.css" />
@@ -40,11 +41,7 @@
                 overflow: hidden;
            }*/
            .like_or_hate, .container{
-                /*display: inline-block;
-                position: relative;*/
-                
-                /*width:60%;
-                height: 20%;*/
+               
                 margin-right: 2%;
                 overflow: hidden;
            }
@@ -176,29 +173,31 @@
             function pass(username){
                 //add to pass
             }
-</script>
 
+	</script>
 </head>
 <body>
-    <div id = "header">
-        <img src = "photos/logo.png" id = "logo">
-        <h1 id="dashboard_welcome"> Dashboard </h1>
-    </div>
-    <div id = "navbar">
-        <ul>
-            <li><a href = "dashboard.html">Dashboard</a></li>
-            <li><a href = "">Matches</a></li>
-            <li><a href = "">Messages</a></li>
-            <li><a href = "user_profile.html">Settings</a></li>
-        </ul>
-    </div>
-    <div id = "users">
-        <div id = "profile_pic">
-        </div>
-        <div id = "profile_info">
-        </div>
-        <div id = "buttons">
-        </div>
-    </div>
+	<div id = "des">
+	<div id = "header">
+		<img src = "photos/logo.png" id = "logo">
+	</div>
+	<div id = "navbar">
+		<ul>
+			<li><a href = "dashboard.html">Dashboard</a></li>
+			<li><a href = "">Matches</a></li>
+			<li><a href = "">Messages</a></li>
+			<li><a href = "user_profile.html">Settings</a></li>
+		</ul>
+	</div>
+	<div id = "users">
+		<div id = "profile_pic">
+		</div>
+		<div id = "profile_info">
+		</div>
+		<div id = "buttons">
+			<button type = "button" id = "get_next">Show Next Profile</button>
+		</div>
+	</div>
+</div>
 </body>
 </html>

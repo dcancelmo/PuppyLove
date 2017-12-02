@@ -33,13 +33,14 @@ def getUserProfileInfo():
 		response = user_rows
 		
 	if user_rows is not None:
+
 		# profiles(userName , userPic , humanName, dogPic,  dogName, description, genderPref, gender);
 		response = {'userName': user_rows[0],'gender': user_rows[7],'genderPref': user_rows[6],
 		'description': user_rows[5],'humanName': user_rows[2], 'dogName': user_rows[4], 
 		'dogPic' : user_rows[3].encode('base64'), 'humanPic': user_rows[1].encode('base64'),
 		'longitude' : user_rows[8], 'latitude' : user_rows[9], 'radius' : user_rows[10]}
 		
-		
+
 		print json.dumps(response)
 		
 
