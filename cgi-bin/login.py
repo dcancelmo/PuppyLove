@@ -60,6 +60,7 @@ if stored_login_cookie:
                     expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
                     cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
                     print cookie.output()
+                    print "Location: ../dashboard.html"
                     print
                     # print '''<html>
                     #         <head>
@@ -76,8 +77,8 @@ if stored_login_cookie:
                     #         </body>
                     #         </html>
                     #         '''
-                    #print "Content-Type: text/html"
-                    print open('../dashboard.html').read()
+                    # print "Content-Type: text/html"
+                    # print open('../dashboard.html').read()
                 else:
                     print "Content-Type: text/html"
                     print "Location: ../loginMessages/incorrect.html"
@@ -122,7 +123,9 @@ else:
                 #     </body>
                 #     </html>
                 #     '''
-                print open('../dashboard.html').read()
+                print "Content-Type: text/html"
+                print "Location: ../dashboard.html"
+                print
             else:
                 print "Content-Type: text/html"
                 print "Location: ../loginMessages/incorrect.html"
