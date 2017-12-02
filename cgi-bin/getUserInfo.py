@@ -32,14 +32,15 @@ def getUserProfileInfo():
 		#response = {'humanName': user_rows[0], 'dogName': user_rows[3], 'dogPic' : user_rows[2].decode('base64'), 'humanPic': user_rows[1].decode('base64')}
 		#response = {'humanName': user_rows['humanName'], 'dogName': user_rows['dogName'], 'dogPic' : user_rows['dogPic'].decode('base64'), 'humanPic': user_rows['userPic'].decode('base64')}
 		response = user_rows
-		with open('test.txt', 'w') as outfile:
-			json.dump(response, outfile)
+		
 	if user_rows is not None:
 		# profiles(userName , userPic , humanName, dogPic,  dogName, description, genderPref, gender);
-		response = {'userName': user_rows[0],'gender': user_rows[7],'genderPref': user_rows[6],'description': user_rows[5],'humanName': user_rows[2], 'dogName': user_rows[4], 'dogPic' : user_rows[3].encode('base64'), 'humanPic': user_rows[1].encode('base64')}
+		response = {'userName': user_rows[0],'gender': user_rows[7],'genderPref': user_rows[6],
+		'description': user_rows[5],'humanName': user_rows[2], 'dogName': user_rows[4], 
+		'dogPic' : user_rows[3].encode('base64'), 'humanPic': user_rows[1].encode('base64'),
+		'longitude' : user_rows[8], 'latitude' : user_rows[9], 'radius' : user_rows[10]}
 		
-		with open('test.txt', 'w') as outfile:
-			json.dump(response, outfile)
+		
 		print json.dumps(response)
 		
 
