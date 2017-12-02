@@ -82,7 +82,7 @@ try:
     # else:
     c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref, gender])
 
-    print "Location: ../dashboard.html"
+    print "Location: ../view_profile.html"
     print
     #c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
     # user_row = c.execute("SELECT humanName FROM profiles WHERE userName=?", [userName])
@@ -138,7 +138,7 @@ except sqlite3.Error as er:
         c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?',[humanName, humanPic, dogPic, dogName, description, genderPref, gender, userName])
 
     #c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
-    print "Location: ../dashboard.html"
+    print "Location: ../view_profile.html"
     print
     # print '''<html>
     #     <head>
