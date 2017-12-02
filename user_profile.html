@@ -46,13 +46,13 @@
             <input type="text" name="username" required>
             <br>
             <h2> Profile Picture: </h2>
-            <input type="file" name="userPic">
+            <input type="file" name="userPic" accept=".jpg, .jpeg, .png">
             <br>
             <h2> Your Dog's Name: </h2>
             <input type="text" name="dogName" required>
             <br>
             <h2> A Picture of your dog: </h2>
-            <input type="file" name="dogPic">
+            <input type="file" name="dogPic" accept=".jpg, .jpeg, .png">
             <br>
             <h2> Add a description: </h2>
             <input type="text" name="description" size="40" required>
@@ -68,6 +68,7 @@
             <input type="radio" name="genderPref" value="both"> Both<br>
             <br>
             <button type="submit"> Update </button>
+            <input type="text" name="newUser" value="false" required hidden>
         </form>
     </body>
 </html>

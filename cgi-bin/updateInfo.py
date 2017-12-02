@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 
 import cgitb
 import sqlite3
@@ -51,7 +52,18 @@ dogName = str(form['dogName'].value)
 description = str(form['description'].value)
 gender = str(form['gender'].value)
 genderPref = str(form['genderPref'].value)
+newUser = str(form['newUser'].value)
 
+
+# def checkFileType(picFile):
+#     acceptedFileTypes = ["‰JPG", "‰JPEG", "‰PNG"]
+#     for type in acceptedFileTypes:
+#         if picFile.startswith(type):
+#             return True
+#     return False
+
+
+# if checkFileType(humanPic) and checkFileType(dogPic):
 try:
     c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref, gender])
     #c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
@@ -125,3 +137,32 @@ except sqlite3.Error as er:
 
 conn.commit()
 conn.close()
+# else:
+#     if newUser is "false":
+#         print
+#         print '''<html lang="en">
+#                     <head>
+#                         <title>Incorrect</title>
+#                         <script type = "text/javascript">
+#                             alert("Invalid filetypes. Only .jpeg .jpg and .png accepted");
+#                             //window.location.href = "../user_profile.html";
+#                         </script>
+#                     </head>
+#                     <body>'''
+#         print humanPic + "<br>" + dogPic
+#         print''''</body>
+#                 </html>'''
+#     else:
+#         print
+#         print '''<html lang="en">
+#                             <head>
+#                                 <title>Incorrect</title>
+#                                 <script type = "text/javascript">
+#                                     alert("Invalid filetypes. Only .jpeg .jpg and .png accepted");
+#                                     //window.location.href = "../req_user_info.html";
+#                                 </script>
+#                             </head>
+#                             <body>'''
+#         print humanPic + "<br>" + dogPic
+#         print''''</body>
+#                 </html>'''

@@ -36,6 +36,10 @@
                     $('#profpic').html('<img id="profilepic_img"  src=\"data:;base64, ' + humanPicSrc + '\"/>');
                     $('#profile_head').text("Welcome, " + name + "!");
                     $('#description').text(description);
+                    $('#dogs_name').text(dogName);
+                    $('#dogpic').html('<img id="dogpic_img"  src=\"data:;base64, ' + dogPicSrc + '\"/>');
+                    $('#gender').text(gender.charAt(0).toUpperCase() + gender.slice(1));
+                    $('#gender_interest').text(genderPref.charAt(0).toUpperCase() + genderPref.slice(1));
 
 
 //                    alert("User's name is " + data['humanName'] );
@@ -120,6 +124,13 @@
             <div id="profpic"></div>
             <h1>Your Description:</h1>
             <h2 id="description"></h2>
+            <div id="dogpic"></div>
+            <h1>Your Dog's Name:</h1>
+            <h2 id="dogs_name"></h2>
+            <h1>Your Gender:</h1>
+            <h2 id="gender"></h2>
+            <h1>Who you are interested in:</h1>
+            <h2 id="gender_interest"></h2>
         </div>
     </body>
 </html>
