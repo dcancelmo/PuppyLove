@@ -86,40 +86,25 @@
             // this function is called when the user presses ENTER or clicks the Submit
             // button in the form.
             $('form').submit(function() {
-                // gets and logs the message that the user is about to send over the web
-                // socket.
-                var message = $('#m').val();
-                console.log("should transmit message: " + message);
-                // uses the socket.emit() function to send the message over the socket
-                // as a 'chat message' event.  the server will inspect the event type
-                // and call an appropriate event handler to handle it.
-                socket.emit('chat message', $('#m').val());
-                // blanks out the message field (so that the user can type a fresh
-                // message)
-                $('#m').val('');
-                // returns false so that the page is not reloaded every time that the
-                // form is submitted, which would cause the socket to disconnect and
-                // reconnect, and blank out any messages in the window.
-                return false;
-            });
-            // this event handler is called whenever the socket RECEIVES a 'chat message'
-            // event from the server.  this will be called when the client's own messages
-            // are sent back, but also if/when another client sends a message to the same
-            // server using the 'chat message' event.
-            socket.on('chat message', function(msg) {
                 $.ajax({
-                    url: 'cgi-bin/get_username.py',
+                    url:'cgi-bin/get_username.py',
                     type: 'GET',
                     dataType: 'text',
                     success: function(response){
                         var response = JSON.parse(response);
                         var username = response.username;
-                        $('#messages').append($('<li>').text(username+": "+msg));
-                    },
-                    error: function(request, status, error){
-                        console.log(error);
+                        var message = username + ": " + $('#m').val();
+                        console.log(username);
+                        console.log("should transmit message: " + message);
+                        socket.emit('chat message', message);
+                        $('#m').val('');
                     }
                 });
+                return false;
+            });
+
+            socket.on('chat message', function(msg) {
+                $('#messages').append($('<li>').text(msg));
                 // add the contents of the message to the unordered list.
             });
          </script>

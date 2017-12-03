@@ -51,12 +51,12 @@ def getPotentialMatches():
 	coordA = {'lng':lng, 'lat':lat}
 	radiusA = parameters.getvalue("radius")
 
-	#print "Content-Type: application/json"
+	# print "Content-Type: application/json"
 	print
-    #print cookie['LOGIN'].value
-	#get the users full name
+	#print cookie['LOGIN'].value
+	# get the users full name
 	username = cookie['LOGIN'].value
-	#print username
+	# print username
 	select_stmt = ''
 	select_stmt_both = "SELECT * FROM profiles WHERE (genderPref='{}' OR genderPref='{}') AND userName !='{}'".format(c_gender, 'both', c_userName)
 	if c_genderPref == 'both':
@@ -76,8 +76,9 @@ def getPotentialMatches():
 			coordB = {'lng':lngB, 'lat':latB}
 			bool_returned = calculateDistance(coordA, coordB, radiusA, radiusB)['boolean']
 			distance = calculateDistance(coordA, coordB, radiusA, radiusB)['distance']
-			if bool_returned:#if within radius preference
-				#check if never liked/passed this person before
+			if bool_returned: # if within radius preference
+				# check if never liked/passed this person before
+				c.execute('CREATE TABLE IF NOT EXISTS likes(liker VARCHAR(30), likee VARCHAR(30), like_or_hate VARCHAR(30))')
 				seen_check = c.execute("SELECT * FROM likes WHERE liker=? AND likee=?",[username, row[0]])
 				if seen_check.fetchone() is None: #if they have not seen this person bfore
 					entry = {
@@ -99,5 +100,6 @@ def getPotentialMatches():
 			
 		# with open('test.txt', 'w') as outfile:
 		# 	json.dump(data, outfile)
+		print
 		print json.dumps(data)
 getPotentialMatches()
