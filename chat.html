@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>Socket.IO Chat Example</title>
-        <script src="socket.io/socket.io.js"></script>
+        <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
         <style>
             * {
@@ -52,7 +52,6 @@
         <form action="">
             <input id="m" autocomplete="off"/><button>Send</button>
         </form>
-       
         <script>
             // web sockets do allow cross-domain connections.  It is generally up to the
             // server to determine whether or not a connection from an incoming client
@@ -60,7 +59,7 @@
             // no URL is specified when this socket is opened because by default the
             // socket will try to connect back to the host from which this page was
             // served (which in this case is the desired behavior).
-            var socket = io();
+            var socket = io.connect('http://127.0.0.1:3000');
             // this function is called when the user presses ENTER or clicks the Submit
             // button in the form.
             $('form').submit(function() {
