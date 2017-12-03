@@ -7,10 +7,13 @@ var io = require('socket.io')(http);
 
 // this defines a route handler for '/', which is the root on the server
 app.get('/', function(request, response) {
+    // hello world example
+    // response.send('<h1>Hello, world!</h1>');
+
     // send a file in response to a request.
     // __dirname is a shortcut for the current directory
     console.log('__dirname: ' + __dirname);
-    response.sendFile(__dirname + '/chat.html');
+    response.sendFile(__dirname +'chat.html');
 
 });
 
