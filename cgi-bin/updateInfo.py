@@ -53,7 +53,9 @@ description = str(form['description'].value)
 gender = str(form['gender'].value)
 genderPref = str(form['genderPref'].value)
 newUser = str(form['newUser'].value)
-
+longitude = str(form['longitude'].value)
+latitude = str(form['latitude'].value)
+radius = str(form['radius'].value)
 
 # def checkFileType(picFile):
 #     acceptedFileTypes = ["‰JPG", "‰JPEG", "‰PNG"]
@@ -80,8 +82,8 @@ try:
     #     userPicture = userPicture.fetchone()
     #     c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, userPicture, humanName, dogPic, dogName, description, genderPref, gender])
     # else:
-    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref, gender])
-
+    #c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref, gender])
+    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender, longitude, latitude, radius) VALUES(?,?, ?, ?, ? , ?, ?, ?,?,?,?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref, gender,longitude,latitude,radius])
     print "Location: ../view_profile.html"
     print
     #c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
@@ -129,13 +131,13 @@ except sqlite3.Error as er:
     # c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, gender, userName])
 
     if humanPic is "" and dogPic is "":
-        c.execute('UPDATE profiles SET humanName=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?',[humanName, dogName, description, genderPref, gender, userName])
+        c.execute('UPDATE profiles SET humanName=?, dogName=? , description=? , genderPref=?, gender=?,longitude=?, latitude=?,radius=?  WHERE userName=?',[humanName, dogName, description, genderPref, gender,longitude,latitude,radius,  userName])
     elif dogPic is "":
-        c.execute('UPDATE profiles SET humanName=? , userPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?',[humanName, humanPic, dogName, description, genderPref, gender, userName])
+        c.execute('UPDATE profiles SET humanName=? , userPic=?, dogName=? , description=? , genderPref=?, gender=?,longitude=?, latitude=?,radius=?  WHERE userName=?',[humanName, humanPic, dogName, description, genderPref, gender,longitude,latitude,radius,  userName])
     elif humanPic is "":
-        c.execute('UPDATE profiles SET humanName=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?',[humanName, dogPic, dogName, description, genderPref, gender, userName])
+        c.execute('UPDATE profiles SET humanName=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? ,longitude=?, latitude=?,radius=? WHERE userName=?',[humanName, dogPic, dogName, description, genderPref, gender, longitude,latitude,radius, userName])
     else:
-        c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?',[humanName, humanPic, dogPic, dogName, description, genderPref, gender, userName])
+        c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? ,longitude=?, latitude=?,radius=? WHERE userName=?',[humanName, humanPic, dogPic, dogName, description, genderPref, gender, longitude,latitude,radius, userName])
 
     #c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
     print "Location: ../view_profile.html"
