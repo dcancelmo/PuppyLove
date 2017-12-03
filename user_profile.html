@@ -21,8 +21,79 @@
             data: { param: " "},
             dataType: "text"
         }).done(function(response) {
-            $('#welcomeMessage').html("Login username: " + response)
+            $('#welcomeMessage').html(response)
         });
+
+        function confirmDelete() {
+            if (confirm("Are you sure? This CANNOT be reversed.") === true) {
+                $.ajax({
+                    type: "GET",
+                    url: "/cgi-bin/delete.py",
+                    data: { },
+                    success: function (response) {
+                        window.location.href = "./login.html";
+                    },
+                    error: function (jqXHR, textStatus, error) {
+                        console.log("An error has occurred. " + jqXHR);
+                    }
+                });
+//                window.location.href = "./cgi-bin/delete.py";
+//                $.ajax({
+//                    type: "POST",
+//                    url: "/cgi-bin/delete.py",
+//                    data: {username: document.getElementById("welcomeMessage").value},
+//                    dataType: "text"
+//                }).done(function(response) {
+//                    window.location.href = "./login.html";
+//                });
+            }
+        }
+        $.ajax({
+                type: "GET",
+                url: '/cgi-bin/getUserInfo.py',
+                data: {param: " "},
+
+                success: function(data){
+                    var data = JSON.parse(data);
+                    var userName = data.userName;
+                    var name = data.humanName;
+                    var humanPicSrc =data.humanPic;
+                    var dogPicSrc = data.dogPic;
+                    var dogName = data.dogName;
+                    var genderPref = data.genderPref;
+                    var gender = data.gender;
+                    var description = data.description;
+                    // '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
+                    $('#username').val(name);
+//                    $('#userPic').html('<img id="profilepic_img" width="500dp" src=\"data:;base64, ' + humanPicSrc + '\"/>');
+                    $('#description').val(description);
+                    $('#dogName').val(dogName);
+//                    $('#dogPic').html('<img id="dogpic_img" width="250dp" src=\"data:;base64, ' + dogPicSrc + '\"/>');
+                    switch(gender) {
+                        case "male":
+                            document.getElementById('male').checked = true;
+                            break;
+                        case "female":
+                            document.getElementById('female').checked = true;
+                            break;
+                    }
+                    switch(genderPref) {
+                        case "male":
+                            document.getElementById('maleP').checked = true;
+                            break;
+                        case "female":
+                            document.getElementById('femaleP').checked = true;
+                            break;
+                        case "both":
+                            document.getElementById('bothP').checked = true;
+                            break;
+                    }
+
+                },
+                error: function(jqXHR, textStatus, error){
+                    console.log("error from getUserInfo")
+                }
+            });
         
     </script>
     <body>
@@ -35,39 +106,46 @@
             <li><a href = "dashboard.html">Dashboard</a></li>
             <li><a href="view_profile.html">Profile</a></li>
             <li><a href = "">Matches</a></li>
-            <li><a href = "">Messages</a></li>
+            <li><a href = "messages.html">Messages</a></li>
             <li><a href = "user_profile.html">Settings</a></li>
             <li><a href = "cgi-bin/logout.py">Log out</a></li>
         </ul>
     </div>
-        <form action="/cgi-bin/updateInfo.py" method = "post" enctype="multipart/form-data">
-            <h1 id="welcomeMessage"></h1>
-            <h2> Your Name: </h2>
-            <input type="text" name="username" required>
-            <br>
-            <h2> Profile Picture: </h2>
-            <input type="file" name="userPic">
-            <br>
-            <h2> Your Dog's Name: </h2>
-            <input type="text" name="dogName" required>
-            <br>
-            <h2> A Picture of your dog: </h2>
-            <input type="file" name="dogPic">
-            <br>
-            <h2> Add a description: </h2>
-            <input type="text" name="description" size="40" required>
-            <br>
+    <form action="/cgi-bin/updateInfo.py" method = "post" enctype="multipart/form-data">
+        <h1 style="display: inline">Login Username: </h1><h1 style="display: inline" id="welcomeMessage"></h1>
+        <h2> Your Name: </h2>
+        <input type="text" name="username" id="username" required>
+        <br>
+        <h2> Change your profile picture: </h2>
+        <input type="file" name="userPic" id="userPic" accept=".jpg, .jpeg, .png">
+        <br>
+        <h2> Your Dog's Name: </h2>
+        <input type="text" name="dogName" id="dogName" required>
+        <br>
+        <h2> Change your dog picture: </h2>
+        <input type="file" name="dogPic" id="dogPic" accept=".jpg, .jpeg, .png">
+        <br>
+        <h2> Add a description: </h2>
+        <input type="text" name="description" id="description" size="40" required>
+        <br>
 
-            <h2> Your Gender: </h2>
-            <input type="radio" name="gender" value="male" required> Male<br>
-            <input type="radio" name="gender" value="female"> Female<br>
-            
-            <h2> Who are you interested in?: </h2>
-            <input type="radio" name="genderPref" value="male" required> Male<br>
-            <input type="radio" name="genderPref" value="female"> Female<br>
-            <input type="radio" name="genderPref" value="both"> Both<br>
-            <br>
-            <button type="submit"> Update </button>
-        </form>
+        <h2> Your Gender: </h2>
+        <input type="radio" name="gender" id="male" value="male" required> Male<br>
+        <input type="radio" name="gender" id="female" value="female"> Female<br>
+
+        <h2> Who are you interested in?: </h2>
+        <input type="radio" name="genderPref" id="maleP" value="male" required> Male<br>
+        <input type="radio" name="genderPref" id="femaleP" value="female"> Female<br>
+        <input type="radio" name="genderPref" id="bothP" value="both"> Both<br>
+        <br>
+        <button type="submit"> Update </button>
+        <input type="text" name="newUser" value="false" required hidden>
+
+    </form>
+    <h1 style="color: red"><strong> DELETE ACCOUNT </strong></h1>
+    <br>
+    <button id="delete" onclick=confirmDelete()> DELETE </button>
+    <br><br>
+
     </body>
 </html>

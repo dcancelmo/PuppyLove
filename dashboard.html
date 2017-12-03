@@ -55,46 +55,46 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
 
-    function updateUserLocation(pos,radius){
-      $.ajax({
-            type: "GET",
-            url: "/cgi-bin/UserLocation.py",
-            data:{"longitude" : pos.longitude, "latitude" : pos.latitude, 
-                "radius" : radius},
-            success: function(response){
-                console.log("Radius: "+ radius);
-                console.log("updatedUserLocation successfully");
-                console.log("response" + response);
-            },
-            error: function(){
-                console.log("halp");
-            }
-            
-        });
-   }
-    $(function getLocation(){
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            
-            
-        
-            radius = 30;
-            console.log("Position: " + pos.lat);
-            
-            updateUserLocation(position.coords, radius);
-          }, function() {
-            handleLocationError(true);
-          });
-
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false);
-        }
-    });
+//    function updateUserLocation(pos,radius){
+//      $.ajax({
+//            type: "GET",
+//            url: "/cgi-bin/UserLocation.py",
+//            data:{"longitude" : pos.longitude, "latitude" : pos.latitude,
+//                "radius" : radius},
+//            success: function(response){
+//                console.log("Radius: "+ radius);
+//                console.log("updatedUserLocation successfully");
+//                console.log("response" + response);
+//            },
+//            error: function(){
+//                console.log("halp");
+//            }
+//
+//        });
+//   }
+//    $(function getLocation(){
+//        if (navigator.geolocation) {
+//          navigator.geolocation.getCurrentPosition(function(position) {
+//            var pos = {
+//              lat: position.coords.latitude,
+//              lng: position.coords.longitude
+//            };
+//
+//
+//
+//            radius = 30;
+//            console.log("Position: " + pos.lat);
+//
+//            updateUserLocation(position.coords, radius);
+//          }, function() {
+//            handleLocationError(true);
+//          });
+//
+//        } else {
+//          // Browser doesn't support Geolocation
+//          handleLocationError(false);
+//        }
+//    });
      $.ajax({
                 type: "GET",
                 url: '/cgi-bin/getUserInfo.py',
@@ -188,7 +188,7 @@
             <li><a href = "dashboard.html">Dashboard</a></li>
             <li><a href="view_profile.html">Profile</a></li>
             <li><a href = "">Matches</a></li>
-            <li><a href = "">Messages</a></li>
+            <li><a href = "messages.html">Messages</a></li>
             <li><a href = "user_profile.html">Settings</a></li>
             <li><a href = "cgi-bin/logout.py">Log out</a></li>
         </ul>

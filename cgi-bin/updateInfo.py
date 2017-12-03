@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 
 import cgitb
 import sqlite3
@@ -51,16 +52,45 @@ dogName = str(form['dogName'].value)
 description = str(form['description'].value)
 gender = str(form['gender'].value)
 genderPref = str(form['genderPref'].value)
+newUser = str(form['newUser'].value)
 
+
+# def checkFileType(picFile):
+#     acceptedFileTypes = ["‰JPG", "‰JPEG", "‰PNG"]
+#     for type in acceptedFileTypes:
+#         if picFile.startswith(type):
+#             return True
+#     return False
+
+
+# if checkFileType(humanPic) and checkFileType(dogPic):
 try:
+    # if humanPic is None and dogPic is None:
+    #     userPicture = c.execute('SELECT userPic FROM profiles WHERE userName=?', [userName])
+    #     userPicture = userPicture.fetchone()
+    #     dogPicture = c.execute('SELECT dogPic FROM profiles WHERE userName=?', [userName])
+    #     dogPicture = dogPicture.fetchone()
+    #     c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, userPicture, humanName, dogPicture, dogName, description, genderPref, gender])
+    # elif dogPic is None:
+    #     dogPicture = c.execute('SELECT dogPic FROM profiles WHERE userName=?', [userName])
+    #     dogPicture = dogPicture.fetchone()
+    #     c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, humanPic, humanName, dogPicture, dogName, description, genderPref, gender])
+    # elif humanPic is None:
+    #     userPicture = c.execute('SELECT userPic FROM profiles WHERE userName=?', [userName])
+    #     userPicture = userPicture.fetchone()
+    #     c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, userPicture, humanName, dogPic, dogName, description, genderPref, gender])
+    # else:
     c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref, gender])
+
+    print "Location: ../view_profile.html"
+    print
     #c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
-    user_row = c.execute("SELECT humanName FROM profiles WHERE userName=?", [userName])
+    # user_row = c.execute("SELECT humanName FROM profiles WHERE userName=?", [userName])
     #conn.commit()
-    user_row1 = user_row.fetchone()
-    if user_row1 is not None:
-        print "Location: ../dashboard.html"
-        print
+    # user_row1 = user_row.fetchone()
+    # if user_row1 is not None:
+    #     print "Location: ../dashboard.html"
+    #     print
         # print '''<html>
         #     <head>
         #         <title>Profile Updated and the row is not none</title>
@@ -72,9 +102,9 @@ try:
         #     </body>
         # </html>
         # '''
-    else:
-        print "Location: ../dashboard.html"
-        print
+    # else:
+    #     print "Location: ../dashboard.html"
+    #     print
         # print '''<html>
         #     <head>
         #         <title>Profile Updated -> did not update the table</title>
@@ -96,9 +126,19 @@ try:
         # </html>
         # '''
 except sqlite3.Error as er:
-    c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, gender, userName])
+    # c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, gender, userName])
+
+    if humanPic is "" and dogPic is "":
+        c.execute('UPDATE profiles SET humanName=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?',[humanName, dogName, description, genderPref, gender, userName])
+    elif dogPic is "":
+        c.execute('UPDATE profiles SET humanName=? , userPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?',[humanName, humanPic, dogName, description, genderPref, gender, userName])
+    elif humanPic is "":
+        c.execute('UPDATE profiles SET humanName=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?',[humanName, dogPic, dogName, description, genderPref, gender, userName])
+    else:
+        c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?',[humanName, humanPic, dogPic, dogName, description, genderPref, gender, userName])
+
     #c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
-    print "Location: ../dashboard.html"
+    print "Location: ../view_profile.html"
     print
     # print '''<html>
     #     <head>
@@ -125,3 +165,32 @@ except sqlite3.Error as er:
 
 conn.commit()
 conn.close()
+# else:
+#     if newUser is "false":
+#         print
+#         print '''<html lang="en">
+#                     <head>
+#                         <title>Incorrect</title>
+#                         <script type = "text/javascript">
+#                             alert("Invalid filetypes. Only .jpeg .jpg and .png accepted");
+#                             //window.location.href = "../user_profile.html";
+#                         </script>
+#                     </head>
+#                     <body>'''
+#         print humanPic + "<br>" + dogPic
+#         print''''</body>
+#                 </html>'''
+#     else:
+#         print
+#         print '''<html lang="en">
+#                             <head>
+#                                 <title>Incorrect</title>
+#                                 <script type = "text/javascript">
+#                                     alert("Invalid filetypes. Only .jpeg .jpg and .png accepted");
+#                                     //window.location.href = "../req_user_info.html";
+#                                 </script>
+#                             </head>
+#                             <body>'''
+#         print humanPic + "<br>" + dogPic
+#         print''''</body>
+#                 </html>'''
