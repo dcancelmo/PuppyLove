@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-
 import math
 from math import sin, cos, sqrt, atan2, radians
-
 import cgitb
 import os
 import cgi
@@ -41,7 +39,7 @@ def calculateDistance(coordA, coordB, radiusA, radiusB):
 	distance = earths_radius * c
 
 	
-	return (distance <= radiusA) & (distance <= radiusB)
+	return {'boolean' :(distance <= radiusA) & (distance <= radiusB), 'distance' : distance}
 
 def getPotentialMatches():
 	parameters = cgi.FieldStorage()
@@ -71,30 +69,35 @@ def getPotentialMatches():
 	data = []
 	if user_rows is not None:
 		
-		for row in user_rows:
+		for row in user_rows: 
 			radiusB = row[10]
 			lngB = row[8]
 			latB = row[9]
 			coordB = {'lng':lngB, 'lat':latB}
+			bool_returned = calculateDistance(coordA, coordB, radiusA, radiusB)['boolean']
+			distance = calculateDistance(coordA, coordB, radiusA, radiusB)['distance']
+			if bool_returned:#if within radius preference
+				#check if never liked/passed this person before
+				seen_check = c.execute("SELECT * FROM likes WHERE liker=? AND likee=?",[username, row[0]])
+				if seen_check.fetchone() is None: #if they have not seen this person bfore
+					entry = {
+						'username': row[0],
+						'userPic' : row[1].encode('base64'),
+						'humanName' : row[2],
+						'dogPic' : row[3].encode('base64'),
+						'dogName' : row[4],
+						'description' :row[5],
+						'genderPref' :row[6],
+						'gender' :row[7],
+						'longitude' : row[8],
+						'latitude' : row[9],
+						'radius' :row[10],
+						'distance' : distance
+					}
+					data.append(entry)
 			
-			if calculateDistance(coordA, coordB, radiusA, radiusB):
-				entry = {
-					'username': row[0],
-					'userPic' : row[1].encode('base64'),
-					'humanName' : row[2],
-					'dogPic' : row[3].encode('base64'),
-					'dogName' : row[4],
-					'description' :row[5],
-					'genderPref' :row[6],
-					'gender' :row[7],
-					'longitude' : row[8],
-					'latitude' : row[9],
-					'radius' :row[10]
-				}
-				data.append(entry)
 			
-			
-		with open('test.txt', 'w') as outfile:
-			json.dump(data, outfile)
+		# with open('test.txt', 'w') as outfile:
+		# 	json.dump(data, outfile)
 		print json.dumps(data)
 getPotentialMatches()

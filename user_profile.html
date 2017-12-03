@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html>
     <head>
         <title>Puppy Love </title>
         <meta charset="UTF-8">
@@ -21,133 +22,108 @@
             data: { param: " "},
             dataType: "text"
         }).done(function(response) {
-            $('#welcomeMessage').html(response)
+            $('#welcomeMessage').html(response+ " is logged in")
         });
-
-        function confirmDelete() {
-            if (confirm("Are you sure? This CANNOT be reversed.") === true) {
-                $.ajax({
-                    type: "GET",
-                    url: "/cgi-bin/delete.py",
-                    data: { },
-                    success: function (response) {
-                        window.location.href = "./login.html";
-                    },
-                    error: function (jqXHR, textStatus, error) {
-                        console.log("An error has occurred. " + jqXHR);
-                    }
-                });
-//                window.location.href = "./cgi-bin/delete.py";
-//                $.ajax({
-//                    type: "POST",
-//                    url: "/cgi-bin/delete.py",
-//                    data: {username: document.getElementById("welcomeMessage").value},
-//                    dataType: "text"
-//                }).done(function(response) {
-//                    window.location.href = "./login.html";
-//                });
-            }
-        }
-        $.ajax({
+        function updateUserLocation(pos,radius){
+          $.ajax({
                 type: "GET",
-                url: '/cgi-bin/getUserInfo.py',
-                data: {param: " "},
-
-                success: function(data){
-                    var data = JSON.parse(data);
-                    var userName = data.userName;
-                    var name = data.humanName;
-                    var humanPicSrc =data.humanPic;
-                    var dogPicSrc = data.dogPic;
-                    var dogName = data.dogName;
-                    var genderPref = data.genderPref;
-                    var gender = data.gender;
-                    var description = data.description;
-                    // '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
-                    $('#username').val(name);
-//                    $('#userPic').html('<img id="profilepic_img" width="500dp" src=\"data:;base64, ' + humanPicSrc + '\"/>');
-                    $('#description').val(description);
-                    $('#dogName').val(dogName);
-//                    $('#dogPic').html('<img id="dogpic_img" width="250dp" src=\"data:;base64, ' + dogPicSrc + '\"/>');
-                    switch(gender) {
-                        case "male":
-                            document.getElementById('male').checked = true;
-                            break;
-                        case "female":
-                            document.getElementById('female').checked = true;
-                            break;
-                    }
-                    switch(genderPref) {
-                        case "male":
-                            document.getElementById('maleP').checked = true;
-                            break;
-                        case "female":
-                            document.getElementById('femaleP').checked = true;
-                            break;
-                        case "both":
-                            document.getElementById('bothP').checked = true;
-                            break;
-                    }
-
+                url: "/cgi-bin/UserLocation.py",
+                data:{"longitude" : pos.longitude, "latitude" : pos.latitude, 
+                    "radius" : radius},
+                success: function(response){
+                    console.log("Radius: "+ radius);
+                    console.log("updatedUserLocation successfully");
+                    console.log("response" + response);
                 },
-                error: function(jqXHR, textStatus, error){
-                    console.log("error from getUserInfo")
+                error: function(){
+                    console.log("halp");
                 }
+                
             });
-        
+        }
+   
+        //update their location when they update their profile to ensure all users have an updated location
+        $(function getLocation(){
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+                };
+                
+                
+            
+                radius = 17;
+                console.log("Position: " + pos.lat);
+                
+                //updateUserLocation(position.coords, radius);
+                $('#longitude').val(position.coords.longitude);
+                $('#latitude').val(position.coords.latitude);
+                $('#radius').val(radius);
+                console.log("long, lat, radius updated to " + position.coords.longitude + ", " + position.coords.latitude + ", " + radius);
+              }, function() {
+                handleLocationError(true);
+              });
+
+            } else {
+              // Browser doesn't support Geolocation
+              handleLocationError(false);
+            }
+        });
     </script>
     <body>
-    <div id = "header">
+        <div id = "header">
         <img src = "photos/logo.png" id = "logo">
         <h1> Update Profile </h1>
     </div>
-    <div id = "navbar">
+        <div id = "navbar">
         <ul>
             <li><a href = "dashboard.html">Dashboard</a></li>
             <li><a href="view_profile.html">Profile</a></li>
-            <li><a href = "">Matches</a></li>
+
+            <li><a href = "matches.html">Matches</a></li>
             <li><a href = "messages.html">Messages</a></li>
+
             <li><a href = "user_profile.html">Settings</a></li>
             <li><a href = "cgi-bin/logout.py">Log out</a></li>
         </ul>
     </div>
-    <form action="/cgi-bin/updateInfo.py" method = "post" enctype="multipart/form-data">
-        <h1 style="display: inline">Login Username: </h1><h1 style="display: inline" id="welcomeMessage"></h1>
-        <h2> Your Name: </h2>
-        <input type="text" name="username" id="username" required>
-        <br>
-        <h2> Change your profile picture: </h2>
-        <p>Accepted file formats: .jpeg, .jpg, and .png</p>
-        <input type="file" name="userPic" id="userPic" accept=".jpg, .jpeg, .png">
-        <br>
-        <h2> Your Dog's Name: </h2>
-        <input type="text" name="dogName" id="dogName" required>
-        <br>
-        <h2> Change your dog picture: </h2>
-        <p>Accepted file formats: .jpeg, .jpg, and .png</p>
-        <input type="file" name="dogPic" id="dogPic" accept=".jpg, .jpeg, .png">
-        <br>
-        <h2> Add a description: </h2>
-        <input type="text" name="description" id="description" size="40" required>
-        <br>
+        <form action="/cgi-bin/updateInfo.py" method = "post" enctype="multipart/form-data">
+            <h1 id="welcomeMessage"></h1>
+            <h2> Your Name: </h2>
+            <input type="text" name="username" required>
+            <br>
+            <h2> Profile Picture: </h2>
+            <input type="file" name="userPic">
+            <br>
+            <h2> Your Dog's Name: </h2>
+            <input type="text" name="dogName" required>
+            <br>
+            <h2> A Picture of your dog: </h2>
+            <input type="file" name="dogPic">
+            <br>
+            <h2> Add a description: </h2>
+            <input type="text" name="description" size="40" required>
+            <br>
 
-        <h2> Your Gender: </h2>
-        <input type="radio" name="gender" id="male" value="male" required> Male<br>
-        <input type="radio" name="gender" id="female" value="female"> Female<br>
+            <h2> Your Gender: </h2>
+            <input type="radio" name="gender" value="male" required> Male<br>
+            <input type="radio" name="gender" value="female"> Female<br>
+            
+            <br>
+            <h2> Who are you interested in?: </h2>
+            <input type="radio" name="genderPref" value="male" required> Male<br>
+            <input type="radio" name="genderPref" value="female"> Female<br>
+            <input type="radio" name="genderPref" value="both"> Both<br>
 
-        <h2> Who are you interested in?: </h2>
-        <input type="radio" name="genderPref" id="maleP" value="male" required> Male<br>
-        <input type="radio" name="genderPref" id="femaleP" value="female"> Female<br>
-        <input type="radio" name="genderPref" id="bothP" value="both"> Both<br>
-        <br>
-        <button type="submit"> Update </button>
-        <input type="text" name="newUser" value="false" required hidden>
-
-    </form>
-    <h1 style="color: red"><strong> DELETE ACCOUNT </strong></h1>
-    <br>
-    <button id="delete" onclick=confirmDelete()> DELETE </button>
-    <br><br>
-
+<!-- Hidden Location Inputs -->
+            <input type="hidden" id="longitude" name="longitude" value="">
+            <input type="hidden" id="latitude" name="latitude" value="">
+            <input type="hidden" id="radius" name="radius" value="">
+            <button type="submit"> Update </button>
+        </form>
+        <form method="post" action="/cgi-bin/logout.py"><br>
+            <button type="submit" class="btn-default" name="logout"> Logout </button>
+        </form>
     </body>
 </html>

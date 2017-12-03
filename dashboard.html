@@ -11,6 +11,8 @@
                 height:55%;
                 margin: 0 auto;
                 display: block;
+                
+                
             }
            .match{
                 position: relative;
@@ -55,46 +57,47 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
 
-//    function updateUserLocation(pos,radius){
-//      $.ajax({
-//            type: "GET",
-//            url: "/cgi-bin/UserLocation.py",
-//            data:{"longitude" : pos.longitude, "latitude" : pos.latitude,
-//                "radius" : radius},
-//            success: function(response){
-//                console.log("Radius: "+ radius);
-//                console.log("updatedUserLocation successfully");
-//                console.log("response" + response);
-//            },
-//            error: function(){
-//                console.log("halp");
-//            }
-//
-//        });
-//   }
-//    $(function getLocation(){
-//        if (navigator.geolocation) {
-//          navigator.geolocation.getCurrentPosition(function(position) {
-//            var pos = {
-//              lat: position.coords.latitude,
-//              lng: position.coords.longitude
-//            };
-//
-//
-//
-//            radius = 30;
-//            console.log("Position: " + pos.lat);
-//
-//            updateUserLocation(position.coords, radius);
-//          }, function() {
-//            handleLocationError(true);
-//          });
-//
-//        } else {
-//          // Browser doesn't support Geolocation
-//          handleLocationError(false);
-//        }
-//    });
+    function updateUserLocation(pos,radius){
+      $.ajax({
+            type: "GET",
+            url: "/cgi-bin/UserLocation.py",
+            data:{"longitude" : pos.longitude, "latitude" : pos.latitude, 
+                "radius" : radius},
+            success: function(response){
+                console.log("Radius: "+ radius);
+                console.log("updatedUserLocation successfully");
+                console.log("response" + response);
+            },
+            error: function(){
+                console.log("halp");
+            }
+            
+        });
+   }
+    $(function getLocation(){
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            
+            
+        
+            radius = 30;
+            console.log("Position: " + pos.lat);
+            
+            updateUserLocation(position.coords, radius);
+          }, function() {
+            handleLocationError(true);
+          });
+
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false);
+        }
+    });
+    var refToGetUserInfoFunc = (function getUserInfo(){
      $.ajax({
                 type: "GET",
                 url: '/cgi-bin/getUserInfo.py',
@@ -115,6 +118,7 @@
                     var longitude = data.longitude;
                     var latitude = data.latitude;
                     var radius = data.radius;
+                    $('#curr_username').val(userName);
                     $('#dashboard_welcome').text(name + "'s Dashboard");
                     //alert("User's name is " + data['humanName'] );
                    // console.log(data.humanName);
@@ -124,6 +128,8 @@
                     console.log("error from getUserInfo")
                 }
             });
+        return getUserInfo;
+     }());
             function passGender(genderPref, gender, userName, longitude, latitude, radius){
                 $.ajax({
                     type: "GET",
@@ -146,10 +152,11 @@
                             humanName = item['humanName'];
                             humanPic = item['userPic'];
                             dogPic = item['dogPic'];
-
+                            distance = item['distance'];
+                            distance = Number(Math.round(distance+'e2')+'e-2');
                             dogName = item['dogName'];
                             description = item['description'];
-                            htmlstring += "<div class=\"match\" id=\"" +username + "\"><div class=\"human\"> <h2 class=\"humanName\"> Human: " + humanName + " </h2><br> <img class=\"profpic\" src=\"data:;base64, " + humanPic + "\"/></div><div class=\"dog\"> <h2 class=\"dogname\"> Dog:" + dogName + "</h2> <img class=\"dogpic\" src=\"data:;base64, " + dogPic + "\"/> </div> <br> <h2 class=\"description\">Description: </h2><br> <p> " + description + " <br> Longitude: " + longitude + ", Latitude: "+ latitude + " </p>" + "<div class=\"like_or_hate\"> <div class=\"container\"><img class=\"like\" id=\"match_" + username + "\" src=\"photos/like.png\" onclick=\"like(" +username+")\"></div><div class=\"container\"> <img class=\"hate\" id=\"pass_"+username +"\" src=\"photos/hate.png\" onclick=\"pass("+username+")\"></div></div></div>";
+                            htmlstring += "<div class=\"match\" id=\"" +username + "\"><div class=\"human\"> <h2 class=\"humanName\"> Human: " + humanName + " </h2><br> <img class=\"profpic\" src=\"data:;base64, " + humanPic + "\"/></div><div class=\"dog\"> <h2 class=\"dogname\"> Dog:" + dogName + "</h2> <img class=\"dogpic\" src=\"data:;base64, " + dogPic + "\"/> </div> <br> <h2 class=\"description\">Description: </h2><br> <p> " + description + " <br> " + distance + " mi. Away</p>" + "<div class=\"like_or_hate\"> <div class=\"container\"><img class=\"like\" id=\"match_" + username + "\" src=\"photos/like.png\" onclick=\"like('" +username+"')\"></div><div class=\"container\"> <img class=\"hate\" id=\"pass_"+username +"\" src=\"photos/hate.png\"  onclick=\"pass('"+username+"')\"></div></div></div>";
                             
                         });
                         $('#users').append(htmlstring);
@@ -169,17 +176,70 @@
             }
             function like(username){
                 //add to matches
-                alert("You really want to like this person?");
+                alert("You really want to like " + username + "?");
+                console.log("un: " + username);
+                $.ajax({
+                    type: "GET",
+                    url: '/cgi-bin/updateLikes.py',
+                    data: {"liker" : "lludford", "likee": username, 'like_or_hate': "like"},
+                    success: function(data){
+                        var x = JSON.parse(data);
+                        console.log("Success, data: " + x.success);
+                        console.log("Response, data: " + x.response);
+                        reloadPotentialMatches();
+                        if(x.success){
+                            alert("Congrats, It's a match!");
+                        }
+
+                    },
+                    error: function(jqXHR, textStatus, error){
+                        console.log("Error from like(): " + error);
+                        console.log("jqXHR: " + jqXHR);
+                        console.log("Textstatus: " + textStatus);
+                        alert ("ERROR");
+                    }
+                        
+
+                });
+                
             }
-            function pass(username){
-                //add to pass
-                alert("You really want to pass this person?");
+    function reloadPotentialMatches(){
+        $('#users').html('');
+        refToGetUserInfoFunc();
+    }
+    function pass(username){
+        //add to pass
+        alert("You really want to pass "+ username + "?");
+        
+        console.log("un,pass: " + username);
+        $.ajax({
+            type: "GET",
+            url: '/cgi-bin/updateLikes.py',
+            //liker is useless, so dw, i use cookies to populate the 'liker'
+            data: {"liker" : "lludford", "likee": username, 'like_or_hate': "hate"},
+            success: function(data){
+                var x = JSON.parse(data);
+                console.log("Success, data: " + x.success);//is never a success bc they passed
+                reloadPotentialMatches();
+                
+            },
+            error: function(jqXHR, textStatus, error){
+                console.log("Error from like(): " + error);
+                console.log("jqXHR: " + jqXHR);
+                console.log("Textstatus: " + textStatus);
+                alert ("ERROR");
             }
+
+        });
+    }
+    
 </script>
 
 </head>
 <body>
+    <input type="hidden" id="curr_username" value="">
     <div id = "header">
+
         <img src = "photos/logo.png" id = "logo">
         <h1 id="dashboard_welcome"> Dashboard </h1>
     </div>
@@ -187,7 +247,7 @@
         <ul>
             <li><a href = "dashboard.html">Dashboard</a></li>
             <li><a href="view_profile.html">Profile</a></li>
-            <li><a href = "">Matches</a></li>
+            <li><a href = "matches.html">Matches</a></li>
             <li><a href = "messages.html">Messages</a></li>
             <li><a href = "user_profile.html">Settings</a></li>
             <li><a href = "cgi-bin/logout.py">Log out</a></li>
