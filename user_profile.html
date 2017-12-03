@@ -24,6 +24,32 @@
         }).done(function(response) {
             $('#welcomeMessage').html(response+ " is logged in")
         });
+
+        function confirmDelete() {
+            if (confirm("Are you sure? This CANNOT be reversed.") === true) {
+                $.ajax({
+                    type: "GET",
+                    url: "/cgi-bin/delete.py",
+                    data: { },
+                    success: function (response) {
+                        window.location.href = "./login.html";
+                    },
+                    error: function (jqXHR, textStatus, error) {
+                        console.log("An error has occurred. " + jqXHR);
+                    }
+                });
+//                window.location.href = "./cgi-bin/delete.py";
+//                $.ajax({
+//                    type: "POST",
+//                    url: "/cgi-bin/delete.py",
+//                    data: {username: document.getElementById("welcomeMessage").value},
+//                    dataType: "text"
+//                }).done(function(response) {
+//                    window.location.href = "./login.html";
+//                });
+            }
+        }
+        
         function updateUserLocation(pos,radius){
           $.ajax({
                 type: "GET",
