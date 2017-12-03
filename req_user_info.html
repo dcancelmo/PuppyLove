@@ -24,6 +24,53 @@
             $('#welcomeMessage').html("Login username: " + response)
         });
 
+        function updateUserLocation(pos,radius){
+          $.ajax({
+                type: "GET",
+                url: "/cgi-bin/UserLocation.py",
+                data:{"longitude" : pos.longitude, "latitude" : pos.latitude,
+                    "radius" : radius},
+                success: function(response){
+                    console.log("Radius: "+ radius);
+                    console.log("updatedUserLocation successfully");
+                    console.log("response" + response);
+                },
+                error: function(){
+                    console.log("halp");
+                }
+
+            });
+        }
+
+        //update their location when they update their profile to ensure all users have an updated location
+        $(function getLocation(){
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+                };
+
+
+
+                radius = 17;
+                console.log("Position: " + pos.lat);
+
+                //updateUserLocation(position.coords, radius);
+                $('#longitude').val(position.coords.longitude);
+                $('#latitude').val(position.coords.latitude);
+                $('#radius').val(radius);
+                console.log("long, lat, radius updated to " + position.coords.longitude + ", " + position.coords.latitude + ", " + radius);
+              }, function() {
+                handleLocationError(true);
+              });
+
+            } else {
+              // Browser doesn't support Geolocation
+              handleLocationError(false);
+            }
+        });
+
     </script>
     <body>
     <div id = "header">
@@ -61,6 +108,10 @@
             <br>
             <button type="submit"> Create </button>
             <input type="text" name="newUser" value="true" required hidden>
+            <!-- Hidden Location Inputs -->
+            <input type="hidden" id="longitude" name="longitude" value="">
+            <input type="hidden" id="latitude" name="latitude" value="">
+            <input type="hidden" id="radius" name="radius" value="">
         </form>
     </body>
 </html>
