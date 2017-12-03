@@ -107,9 +107,20 @@
             // are sent back, but also if/when another client sends a message to the same
             // server using the 'chat message' event.
             socket.on('chat message', function(msg) {
-                var username = readCookie("LOGIN");
+                $.ajax({
+                    url: 'cgi-bin/get_username.py',
+                    type: 'GET',
+                    dataType: 'text',
+                    success: function(response){
+                        var response = JSON.parse(response);
+                        var username = response.username;
+                        $('#messages').append($('<li>').text(username+": "+msg));
+                    },
+                    error: function(request, status, error){
+                        console.log(error);
+                    }
+                });
                 // add the contents of the message to the unordered list.
-               $('#messages').append($('<li>').text(username+": "+msg));
             });
          </script>
     </body>
