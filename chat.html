@@ -4,6 +4,7 @@
         <title>Socket.IO Chat Example</title>
         <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <link rel = "stylesheet" type = "text/css" href = "style/styleDash.css" />
         <style>
             * {
                 margin: 0;
@@ -46,13 +47,35 @@
         </style>
     </head>
     <body>
+    <div id = "navbar">
+        <ul>
+            <li><a href = "dashboard.html">Dashboard</a></li>
+            <li><a href="view_profile.html">Profile</a></li>
+            <li><a href = "">Matches</a></li>
+            <li><a href = "messages.html">Messages</a></li>
+            <li><a href = "user_profile.html">Settings</a></li>
+            <li><a href = "cgi-bin/logout.py">Log out</a></li>
+        </ul>
+    </div>
    
+    <div id = "messages" style = "margin-left:100px">
         <ul id="messages"></ul>
       
         <form action="">
             <input id="m" autocomplete="off"/><button>Send</button>
         </form>
+    </div>
         <script>
+            function readCookie(name) {
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
             // web sockets do allow cross-domain connections.  It is generally up to the
             // server to determine whether or not a connection from an incoming client
             // should be accepted or not.
@@ -84,8 +107,9 @@
             // are sent back, but also if/when another client sends a message to the same
             // server using the 'chat message' event.
             socket.on('chat message', function(msg) {
+                var username = readCookie("LOGIN");
                 // add the contents of the message to the unordered list.
-               $('#messages').append($('<li>').text(msg));
+               $('#messages').append($('<li>').text(username+": "+msg));
             });
          </script>
     </body>
