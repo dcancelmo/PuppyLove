@@ -27,11 +27,11 @@ def getMatches():
 
 	if user_rows is not None:
 		for row in user_rows:
-			if(row[0] == username){
+			if row[0] is username:
 				match_profile = row[1]
-			}else{
+			else:
 				match_profile = row[0]
-			}
+
 
 			get_user_prof = "SELECT * FROM profiles WHERE userName = '{}'".format(match_profile)
 
