@@ -176,31 +176,33 @@
             }
             function like(username){
                 //add to matches
-                alert("You really want to like " + username + "?");
-                console.log("un: " + username);
-                $.ajax({
-                    type: "GET",
-                    url: '/cgi-bin/updateLikes.py',
-                    data: {"liker" : "lludford", "likee": username, 'like_or_hate': "like"},
-                    success: function(data){
-                        var x = JSON.parse(data);
-                        console.log("Success, data: " + x.success);
-                        console.log("Response, data: " + x.response);
-                        reloadPotentialMatches();
-                        if(x.success == "True"){
-                            alert("Congrats, It's a match!");
+                if (confirm("You really want to like " + username + "?")){
+                    console.log("un: " + username);
+                    $.ajax({
+                        type: "GET",
+                        url: '/cgi-bin/updateLikes.py',
+                        data: {"liker" : "lludford", "likee": username, 'like_or_hate': "like"},
+                        success: function(data){
+                            var x = JSON.parse(data);
+                            console.log("Success, data: " + x.success);
+                            console.log("Response, data: " + x.response);
+                            reloadPotentialMatches();
+                            if(x.success == "True"){
+                                alert("Congrats, It's a match!");
+                            }
+
+                        },
+                        error: function(jqXHR, textStatus, error){
+                            console.log("Error from like(): " + error);
+                            console.log("jqXHR: " + jqXHR);
+                            console.log("Textstatus: " + textStatus);
+                            alert ("ERROR");
                         }
+                            
 
-                    },
-                    error: function(jqXHR, textStatus, error){
-                        console.log("Error from like(): " + error);
-                        console.log("jqXHR: " + jqXHR);
-                        console.log("Textstatus: " + textStatus);
-                        alert ("ERROR");
-                    }
-                        
-
-                });
+                    });
+                }
+                
                 
             }
     function reloadPotentialMatches(){
@@ -209,28 +211,29 @@
     }
     function pass(username){
         //add to pass
-        alert("You really want to pass "+ username + "?");
+        if(confirm("You really want to pass "+ username + "?")){
         
-        console.log("un,pass: " + username);
-        $.ajax({
-            type: "GET",
-            url: '/cgi-bin/updateLikes.py',
-            //liker is useless, so dw, i use cookies to populate the 'liker'
-            data: {"liker" : "lludford", "likee": username, 'like_or_hate': "hate"},
-            success: function(data){
-                var x = JSON.parse(data);
-                console.log("Success, data: " + x.success);//is never a success bc they passed
-                reloadPotentialMatches();
-                
-            },
-            error: function(jqXHR, textStatus, error){
-                console.log("Error from like(): " + error);
-                console.log("jqXHR: " + jqXHR);
-                console.log("Textstatus: " + textStatus);
-                alert ("ERROR");
-            }
+            console.log("un,pass: " + username);
+            $.ajax({
+                type: "GET",
+                url: '/cgi-bin/updateLikes.py',
+                //liker is useless, so dw, i use cookies to populate the 'liker'
+                data: {"liker" : "lludford", "likee": username, 'like_or_hate': "hate"},
+                success: function(data){
+                    var x = JSON.parse(data);
+                    console.log("Success, data: " + x.success);//is never a success bc they passed
+                    reloadPotentialMatches();
+                    
+                },
+                error: function(jqXHR, textStatus, error){
+                    console.log("Error from like(): " + error);
+                    console.log("jqXHR: " + jqXHR);
+                    console.log("Textstatus: " + textStatus);
+                    alert ("ERROR");
+                }
 
-        });
+            });
+        }
     }
     
 </script>
