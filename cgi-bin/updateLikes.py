@@ -55,10 +55,13 @@ def updateLikes():
 		if row is not None:
 			success = "True" 
 			c.execute('CREATE TABLE IF NOT EXISTS matches(user1 varchar(30), user2 varchar(30), couple_id integer primary key autoincrement)')
-			try: 
-				c.execute('INSERT INTO matches(user1, user2) VALUES(?,?)', [liker, likee])
-			except sqlite3.Error as er:
-				response=" excepted in matches portion"
+			user_row2 = c.execute("SELECT * FROM matches WHERE user1=? AND user2=?", [liker, likee])
+			user_row3 = c.execute("SELECT * FROM matches WHERE user1=? AND user2=?", [likee, liker])
+			if user_row2.fetchone() is None and user_row3.fetchone() is None:#test that there are not already matches
+				try: 
+					c.execute('INSERT INTO matches(user1, user2) VALUES(?,?)', [liker, likee])
+				except sqlite3.Error as er:
+					response=" excepted in matches portion"
 				#shouldn't go here because couple should always be unique
 			#create Matches table if not exists, update matches table
 		else:
