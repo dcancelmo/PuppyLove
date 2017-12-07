@@ -71,22 +71,26 @@
         </form>
     </div>
         <script>
-            function readCookie(name) {
-                var nameEQ = name + "=";
-                var ca = document.cookie.split(';');
-                for (var i = 0; i < ca.length; i++) {
-                    var c = ca[i];
-                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-                }
-                return null;
-            }
-            // web sockets do allow cross-domain connections.  It is generally up to the
-            // server to determine whether or not a connection from an incoming client
-            // should be accepted or not.
-            // no URL is specified when this socket is opened because by default the
-            // socket will try to connect back to the host from which this page was
-            // served (which in this case is the desired behavior).
+            $(document).ready(function(){
+                $.ajax({
+                    url: 'cgi-bin/load-messages.py',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success:function(response){
+
+                        $.each(response, function(i, item){
+                            var username = item['username'];
+                            var message = item['message'];
+                            var printedMessage = username + ": " + message;
+                            $('#messages').append($('<li>').text(printedMessage));
+                        });
+                    },
+                    error: function(jqXHR, exception){
+                        alert(exception);
+                    }
+                })
+            });
+
             var socket = io.connect('http://127.0.0.1:3000');
             // this function is called when the user presses ENTER or clicks the Submit
             // button in the form.
@@ -102,7 +106,20 @@
                         console.log(username);
                         console.log("should transmit message: " + message);
                         socket.emit('chat message', message);
-                        $('#m').val('');
+                        
+
+                        $.ajax({
+                            url:'cgi-bin/store-message.py',
+                            type: 'POST',
+                            data: {"message": $('#m').val(), "username": username},
+                            success: function(response){
+                                $('#m').val('');
+                            },
+                            error: function(jqXHR, exception){
+                                alert(exception);
+                            }
+                        });
+
                     }
                 });
                 return false;
