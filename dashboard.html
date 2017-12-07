@@ -160,6 +160,11 @@
                             
                         });
                         $('#users').append(htmlstring);
+//                        console.log(htmlstring)
+                        if (htmlstring === "") {
+                            $('#users').append("No more available potential matches, sorry!");
+                        }
+
                         
                         //alert("Success: genderPref is " + gender);
                         
