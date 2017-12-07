@@ -38,7 +38,8 @@ def getMatches():
 					'humanName' : user_row[2],
 					'dogPic' : user_row[3].encode('base64'),
 					'dogName' : user_row[4],
-					'description' :user_row[5]
+					'description' :user_row[5],
+					'phoneNumber' : user_row[11]
 				}
 				data.append(entry)
 	match_rows = c.execute("SELECT * FROM matches WHERE user2=?", [username])
@@ -55,7 +56,8 @@ def getMatches():
 					'humanName' : user_row[2],
 					'dogPic' : user_row[3].encode('base64'),
 					'dogName' : user_row[4],
-					'description' :user_row[5]
+					'description' :user_row[5],
+					'phoneNumber' : user_row[11]
 				}
 				data.append(entry)
 			

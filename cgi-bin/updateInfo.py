@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+3#!/usr/bin/env python
 # coding=utf-8
 
 import cgitb
@@ -33,7 +33,7 @@ def getCookieValue():
 
 userName = getCookieValue()
 #c.execute('DROP TABLE IF EXISTS profiles')
-c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key, userPic BLOB, humanName varchar(30), dogPic BLOB,  dogName varchar(30), description varchar(200), genderPref varchar(10), gender varchar(10), longitude Decimal(9,7), latitude Decimal(9,7), radius int)')
+c.execute('CREATE TABLE IF NOT EXISTS profiles(userName varchar(30) primary key, userPic BLOB, humanName varchar(30), dogPic BLOB,  dogName varchar(30), description varchar(200), genderPref varchar(10), gender varchar(10), longitude Decimal(9,7), latitude Decimal(9,7), radius int, phoneNumber varchar(30))')
 
 # if 'humanName' in form:
 #     humanName = str(form['username'].value)
@@ -56,7 +56,7 @@ newUser = str(form['newUser'].value)
 longitude = str(form['longitude'].value)
 latitude = str(form['latitude'].value)
 radius = str(form['radius'].value)
-
+phoneNumber = str(form['phoneNumber'].value)
 # def checkFileType(picFile):
 #     acceptedFileTypes = ["‰JPG", "‰JPEG", "‰PNG"]
 #     for type in acceptedFileTypes:
@@ -83,7 +83,7 @@ try:
     #     c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, userPicture, humanName, dogPic, dogName, description, genderPref, gender])
     # else:
     #c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender) VALUES(?,?, ?, ?, ? , ?, ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref, gender])
-    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender, longitude, latitude, radius) VALUES(?,?, ?, ?, ? , ?, ?, ?,?,?,?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref, gender,longitude,latitude,radius])
+    c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref, gender, longitude, latitude, radius, phoneNumber) VALUES(?,?, ?, ?, ? , ?, ?, ?,?,?,?,?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref, gender,longitude,latitude,radius, phoneNumber])
     print "Location: ../view_profile.html"
     print
     #c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, userName])
@@ -131,13 +131,13 @@ except sqlite3.Error as er:
     # c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? WHERE userName=?', [humanName, humanPic, dogPic, dogName, description, genderPref, gender, userName])
 
     if humanPic is "" and dogPic is "":
-        c.execute('UPDATE profiles SET humanName=?, dogName=? , description=? , genderPref=?, gender=?,longitude=?, latitude=?,radius=?  WHERE userName=?',[humanName, dogName, description, genderPref, gender,longitude,latitude,radius,  userName])
+        c.execute('UPDATE profiles SET humanName=?, dogName=? , description=? , genderPref=?, gender=?,longitude=?, latitude=?,radius=?, phoneNumber=?  WHERE userName=?',[humanName, dogName, description, genderPref, gender,longitude,latitude,radius, phoneNumber,  userName])
     elif dogPic is "":
-        c.execute('UPDATE profiles SET humanName=? , userPic=?, dogName=? , description=? , genderPref=?, gender=?,longitude=?, latitude=?,radius=?  WHERE userName=?',[humanName, humanPic, dogName, description, genderPref, gender,longitude,latitude,radius,  userName])
+        c.execute('UPDATE profiles SET humanName=? , userPic=?, dogName=? , description=? , genderPref=?, gender=?,longitude=?, latitude=?,radius=?, phoneNumber=?  WHERE userName=?',[humanName, humanPic, dogName, description, genderPref, gender,longitude,latitude,radius,phoneNumber,   userName])
     elif humanPic is "":
-        c.execute('UPDATE profiles SET humanName=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? ,longitude=?, latitude=?,radius=? WHERE userName=?',[humanName, dogPic, dogName, description, genderPref, gender, longitude,latitude,radius, userName])
+        c.execute('UPDATE profiles SET humanName=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? ,longitude=?, latitude=?,radius=?, phoneNumber=? WHERE userName=?',[humanName, dogPic, dogName, description, genderPref, gender, longitude,latitude,radius,phoneNumber,  userName])
     else:
-        c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? ,longitude=?, latitude=?,radius=? WHERE userName=?',[humanName, humanPic, dogPic, dogName, description, genderPref, gender, longitude,latitude,radius, userName])
+        c.execute('UPDATE profiles SET humanName=? , userPic=?, dogPic=?, dogName=? , description=? , genderPref=?, gender=? ,longitude=?, latitude=?,radius=?, phoneNumber=? WHERE userName=?',[humanName, humanPic, dogPic, dogName, description, genderPref, gender, longitude,latitude,radius, phoneNumber, userName])
 
     #c.execute('INSERT INTO profiles(userName, userPic, humanName, dogPic,  dogName, description, genderPref) VALUES(?, ?, ? , ?, ?)', [userName, humanPic, humanName, dogPic, dogName, description, genderPref])
     print "Location: ../view_profile.html"
