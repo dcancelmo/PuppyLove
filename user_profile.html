@@ -112,6 +112,7 @@
                     var genderPref = data.genderPref;
                     var gender = data.gender;
                     var description = data.description;
+                    var phoneN = data.phoneNumber;
                     // '<img  src=\"data:;base64,'+humanPic.encode('base64')+'\"/>'
                     $('#username').val(name);
 //                    $('#userPic').html('<img id="profilepic_img" width="500dp" src=\"data:;base64, ' + humanPicSrc + '\"/>');
@@ -137,6 +138,7 @@
                             document.getElementById('bothP').checked = true;
                             break;
                     }
+                    $('#phone').val(phoneN);
 
                 },
                 error: function(jqXHR, textStatus, error){
@@ -188,7 +190,7 @@
             <input type="radio" name="genderPref" value="male" id="maleP" required> Male<br>
             <input type="radio" name="genderPref" value="female" id="femaleP"> Female<br>
             <input type="radio" name="genderPref" value="both" id="bothP"> Both<br>
-Phone Number:<input type="text" name="phoneNumber" value="" required> </form><br>
+Phone Number:<input type="text" name="phoneNumber" id="phone" value="" required><br>
 <!-- Hidden Location Inputs -->
             <input type="hidden" id="longitude" name="longitude" value="">
             <input type="hidden" id="latitude" name="latitude" value="">
