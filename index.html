@@ -16,9 +16,14 @@
             type: "GET",
             url: "/cgi-bin/cookieChecker.py",
             data: { param: " "},
-            dataType: "text"
-        }).done(function(response) {
-            $('#response').html(response)
+            dataType: "text",
+            success: function (response) {
+                $('#response').html(response)
+            },
+            error: function (jqXHR, textStatus, error) {
+                location.href = "login.html";
+
+            }
         });
     </script>
 </head>
