@@ -12,6 +12,7 @@ conn = sqlite3.connect('createUser.db')
 conn.text_factory = str #need to change the text_factory for the images
 c = conn.cursor()
 
+c.execute('CREATE TABLE IF NOT EXISTS messages(message varchar(500), username varchar(30))')
 messages_rows = c.execute("SELECT * FROM messages").fetchall()
 
 data = []
