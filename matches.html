@@ -51,6 +51,9 @@
                 padding-bottom: 10%;
                 padding-top: 5%;
            }
+           #unmatch{
+                width:50%;
+           }
     </style>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
@@ -104,7 +107,7 @@
                     
                     dogName = item['dogName'];
                     description = item['description'];
-                    htmlstring += "<div class=\"match\" id=\"" +username + "\"><div class=\"human\"> <h2 class=\"humanName\"> Human: " + humanName + " </h2><br> <img class=\"profpic\" src=\"data:;base64, " + humanPic + "\"/></div><div class=\"dog\"> <h2 class=\"dogname\"> Dog:" + dogName + "</h2> <img class=\"dogpic\" src=\"data:;base64, " + dogPic + "\"/> </div> <br> <h2 class=\"description\">Description: </h2><br> <p> " + description + "</p></div></div>";
+                    htmlstring += "<div class=\"match\" id=\"" +username + "\"><div class=\"human\"> <h2 class=\"humanName\"> Human: " + humanName + " </h2><br> <img class=\"profpic\" src=\"data:;base64, " + humanPic + "\"/></div><div class=\"dog\"> <h2 class=\"dogname\"> Dog:" + dogName + "</h2> <img class=\"dogpic\" src=\"data:;base64, " + dogPic + "\"/> </div> <br> <h2 class=\"description\">Description: </h2><br> <p> " + description + "</p><div class=\"container\"><img id=\"unmatch\" src=\"photos/hate.png\" onclick=\"unmatch('"+username+"')\"></img></div></div></div>";
                     
                 });
                 $('#users').append(htmlstring);
@@ -122,7 +125,32 @@
         });
         
     }
-    
+    function unmatch(username){
+        unmatch_bool = confirm("Are you sure you want to un-match?");
+        if (unmatch){
+            console.log("unmatching");
+            $.ajax({
+                type: "GET",
+                url: "/cgi-bin/unmatch.py",
+                data:{"match_un": username},
+                success: function(response){
+                    alert("Deleted successfully");
+                    reloadMatches()
+                },
+                error: function(){
+                    console.log("halp");
+                }
+                
+            });
+
+        }else{
+            console.log("still matched");
+        }
+    }
+    function reloadMatches(){
+        $('#users').html('');
+        updateMatches();
+    }
 </script>
 
 </head>
