@@ -16,3 +16,4 @@ print "Content-Type: text/html"
 print new_cookie
 print "Location: ../login.html"
 print
+print "<html><script>sessionStorage.clear()</script></html>"

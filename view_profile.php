@@ -110,15 +110,7 @@
             <img src = "photos/logo.png" id = "logo">
             <h1 id="profile_head"></h1>
         </div>
-        <div id = "navbar">
-        <ul>
-            <li><a href = "dashboard.html">Dashboard</a></li>
-            <li><a href="view_profile.html">Profile</a></li>
-            <li><a href = "matches.html">Matches</a></li>
-            <li><a href = "messages.html">Messages</a></li>
-            <li><a href = "user_profile.html">Settings</a></li>
-            <li><a href = "cgi-bin/logout.py">Log out</a></li>
-        </ul>
+        <?php include("navbar.php"); ?>
     </div>
         <!--<h2 id="profile_head"> </h2>-->
         <div class="side">

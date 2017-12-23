@@ -29,9 +29,9 @@ if stored_login_cookie:
             new_cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
             print "Content-Type: text/html"
             print new_cookie
-            print "Location: ../dashboard.html"
+            print "Location: ../dashboard.php"
             print
-            # print open('../dashboard.html').read()
+            # print open('../dashboard.php').read()
         else:
             print "Content-Type: text/html"
             print "Location: ../loginMessages/errorMsg.html"

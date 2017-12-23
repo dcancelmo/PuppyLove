@@ -149,21 +149,11 @@
     </script>
     <body>
         <div id = "header">
-        <img src = "photos/logo.png" id = "logo">
-        <h1> Update Profile </h1>
-    </div>
-        <div id = "navbar">
-        <ul>
-            <li><a href = "dashboard.html">Dashboard</a></li>
-            <li><a href="view_profile.html">Profile</a></li>
+            <img src = "photos/logo.png" id = "logo">
+            <h1> Update Profile </h1>
+        </div>
+        <?php include("navbar.php"); ?>
 
-            <li><a href = "matches.html">Matches</a></li>
-            <li><a href = "messages.html">Messages</a></li>
-
-            <li><a href = "user_profile.html">Settings</a></li>
-            <li><a href = "cgi-bin/logout.py">Log out</a></li>
-        </ul>
-    </div>
         <form action="/cgi-bin/updateInfo.py" method = "post" enctype="multipart/form-data">
             <h1 id="welcomeMessage"></h1>
             <h2> Your Name: </h2>

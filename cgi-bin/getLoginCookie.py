@@ -9,9 +9,6 @@ import Cookie
 
 cgitb.enable()
 
-conn = sqlite3.connect('createUser.db')
-c = conn.cursor()
-
 stored_login_cookie = os.environ.get('HTTP_COOKIE')
 cookie = Cookie.SimpleCookie(stored_login_cookie)
 

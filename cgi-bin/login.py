@@ -61,7 +61,7 @@ if stored_login_cookie:
                     expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
                     cookie['LOGIN']['expires'] = expires.strftime('%a, %d %b %Y %H:%M:%S')
                     print cookie.output()
-                    print "Location: ../dashboard.html"
+                    print "Location: ../dashboard.php"
                     print
                     # print '''<html>
                     #         <head>
@@ -125,7 +125,7 @@ else:
                 #     </html>
                 #     '''
                 print "Content-Type: text/html"
-                print "Location: ../dashboard.html"
+                print "Location: ../dashboard.php"
                 print
             else:
                 print "Content-Type: text/html"

@@ -7,6 +7,7 @@ import cgi
 import sqlite3
 import Cookie
 import json
+
 cgitb.enable()
 
 conn = sqlite3.connect('createUser.db')
