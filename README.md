@@ -1,8 +1,8 @@
 # Puppy Love
-term-project-sql-injectors created by GitHub Classroom
+Term Project for Web Programming Class
 
-Team members:
-Ryan Racicot
+Original Team members:
+Daniel Cancelmo
 Lilian Ludford
 Kayla Sell
-Daniel Cancelmo
+Ryan Racicot
