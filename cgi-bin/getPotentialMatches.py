@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import math
+#!C:/Python27/python.exe
+
 from math import sin, cos, sqrt, atan2, radians
 import cgitb
 import os
@@ -51,12 +52,9 @@ def getPotentialMatches():
 	coordA = {'lng':lng, 'lat':lat}
 	radiusA = parameters.getvalue("radius")
 
-	# print "Content-Type: application/json"
 	print
-	#print cookie['LOGIN'].value
 	# get the users full name
 	username = cookie['LOGIN'].value
-	# print username
 	select_stmt = ''
 	select_stmt_both = "SELECT * FROM profiles WHERE (genderPref='{}' OR genderPref='{}') AND userName !='{}'".format(c_gender, 'both', c_userName)
 	if c_genderPref == 'both':
@@ -64,8 +62,6 @@ def getPotentialMatches():
 	else:
 		select_stmt = "SELECT * FROM profiles WHERE gender='{}' AND (genderPref='{}' OR genderPref='{}') AND userName!='{}'".format(c_genderPref, c_gender, 'both', c_userName)
 	user_rows = c.execute(select_stmt).fetchall()
-	# user_rows = c.execute('SELECT * FROM profiles WHERE gender=? AND (genderPref=? OR genderPref=?)',
-	#  ['female', 'male', 'both'])
 	data = []
 	if user_rows is not None:
 		

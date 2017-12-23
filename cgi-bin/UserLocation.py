@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+#!C:/Python27/python.exe
+
 from math import sin, cos, sqrt, atan2, radians
 
 

@@ -31,7 +31,6 @@ if stored_login_cookie:
             print new_cookie
             print "Location: ../dashboard.php"
             print
-            # print open('../dashboard.php').read()
         else:
             print "Content-Type: text/html"
             print "Location: ../loginMessages/errorMsg.html"

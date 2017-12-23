@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+#!C:/Python27/python.exe
+
 from math import sin, cos, sqrt, atan2, radians
 
 
@@ -22,7 +24,6 @@ cookie = Cookie.SimpleCookie(stored_login_cookie)
 
 def updateLikes():
 	print
-	#print "Content-Type: application/json"
 	parameters = cgi.FieldStorage()
 	userName = cookie['LOGIN'].value
 	liker = parameters.getvalue('liker') #username

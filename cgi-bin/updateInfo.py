@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-# coding=utf-8
+#!C:/Python27/python.exe
+#  coding=utf-8
 
 import cgitb
 import sqlite3

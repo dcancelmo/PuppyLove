@@ -46,8 +46,6 @@ if ('username' in form) & ('password' in form) & ('passwordConfirm' in form):
             'CREATE TABLE IF NOT EXISTS users(username VARCHAR(30) PRIMARY KEY, password char(64), timeCreated VARCHAR(26))')
 
         # Check if already in database
-        # queryName = c.execute('SELECT username FROM ' + table_name + ' WHERE username=?', [username]).fetchone()
-        # if queryName is not username:
         try:
             c.execute('INSERT INTO users (username, password, timeCreated) VALUES (?, ?, ?)',
                       [username, hashPass, timestamp])
