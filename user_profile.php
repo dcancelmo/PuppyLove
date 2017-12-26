@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
     <head>
         <title>Puppy Love </title>
         <meta charset="UTF-8">

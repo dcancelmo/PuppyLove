@@ -160,7 +160,7 @@
                             
                         });
                         $('#users').append(htmlstring);
-//                        console.log(htmlstring)
+//                        console.log(htmlstring);
                         if (htmlstring === "") {
                             $('#users').append("No more available potential matches, sorry!");
                         }
