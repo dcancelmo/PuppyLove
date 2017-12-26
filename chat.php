@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Socket.IO Chat Example</title>
+        <title>Dog Park</title>
         <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
         <link rel = "stylesheet" type = "text/css" href = "style/styleDash.css" />
